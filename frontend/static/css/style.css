@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .video-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #camera {
+    width: 100%;
+    max-height: 300px;
+    border: 2px solid #444;
+    border-radius: 8px;
+  }
+  
+  .chatbox {
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #2a2a2a;
+  }
+  
+  #chat-log {
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+    padding: 5px;
+  }
+  
+  .input-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  #user-input {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+  }
+  
