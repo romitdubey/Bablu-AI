@@ -8,7 +8,7 @@ def handle_multimodal_request(command):
         return
 
     base64_image = encode_image(image_path)
-    response = analyze_image(base64_image,prompt=command)
+    response = analyze_image(base64_image, prompt=f"Answer this question: {command}, with respect to the given image")
 
     if response:
         print("🤖  says:")
