@@ -23,9 +23,9 @@ def main():
                 try:
                     command = recognizer.recognize_google(audio).lower()
                 except sr.UnknownValueError:
-                    pass
+                    continue
                 except sr.RequestError as e:
-                    pass
+                    continue
                 except Exception as e:
                     print(f"Unexpected error: {e}")
                 camera = needs_camera(command)
@@ -39,7 +39,7 @@ def main():
                     print(command)
                     res = send_text_only(command)
                     print(res)
-                    # text_to_speech(res)
+                    text_to_speech(res)
             else:
                 recognizer.adjust_for_ambient_noise(source,duration=1)
                 print("🕵️ Listening...")
@@ -61,13 +61,14 @@ def main():
                         if not cap.isOpened():
                             print("Error: Could not open webcam.")
                 except sr.UnknownValueError:
-                    pass
+                    continue
                 except sr.RequestError as e:
-                    pass
+                    continue
                 except Exception as e:
                     print(f"Unexpected error: {e}")
 
             time.sleep(1)
+            command = ""
 
 
 if __name__ == "__main__":

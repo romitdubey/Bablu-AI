@@ -14,6 +14,6 @@ def handle_multimodal_request(command,cap):
     if response:
         print("🤖  says:")
         print(response)
-        # text_to_speech(response)
+        text_to_speech(response)
     else:
         print("❌ No response from Jarvis.")

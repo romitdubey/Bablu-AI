@@ -18,7 +18,7 @@ def needs_camera(prompt: str) -> bool:
     reply = response.choices[0].message.content.strip().lower()
     if "yes" in reply:
         print("Opening camera...")
-        # text_to_speech("Opening camera...")
+        text_to_speech("Opening camera...")
     return "yes" in reply
 
 def send_text_only(prompt: str) -> str:
@@ -28,7 +28,6 @@ def send_text_only(prompt: str) -> str:
             "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
         },{"role": "user", "content": prompt}],
         model="meta-llama/llama-4-scout-17b-16e-instruct",
-        max_tokens=50
     )
     return response.choices[0].message.content.strip()
 
@@ -54,7 +53,7 @@ def analyze_image(base64_image, prompt="What's in this image?"):
                     }
                 ],
                 model="llama-3.2-11b-vision-preview",
-                max_tokens=50
+                
             )
         return chat_completion.choices[0].message.content
     except Exception as e:
