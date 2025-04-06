@@ -17,7 +17,7 @@ def needs_camera(prompt: str) -> bool:
     reply = response.choices[0].message.content.strip().lower()
     if "yes" in reply:
         print("Opening camera...")
-        text_to_speech("Opening camera...")
+        # text_to_speech("Opening camera...")
     return "yes" in reply
 
 def send_text_only(prompt: str) -> str:
