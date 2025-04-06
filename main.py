@@ -6,14 +6,16 @@ import time
 recognizer = sr.Recognizer()
 mic = sr.Microphone()
 
+assistant_name = "Bablu"
+
 def main():
-    print("🎙️ Bablu is listening... Say 'Hello Bablu' to activate.")
+    print(f"🎙️ {assistant_name} is listening... Say 'Hello {assistant_name}' to activate.")
     activate = False
     while True:        
         with mic as source:
             if activate:
                 recognizer.adjust_for_ambient_noise(source,duration=1)
-                print("🎙️ Bablu is listening...")
+                print(f"🎙️ {assistant_name} is listening...")
                 audio = recognizer.listen(source)
                 try:
                     command = recognizer.recognize_google(audio).lower()
@@ -39,8 +41,8 @@ def main():
 
         try:
             command = recognizer.recognize_google(audio).lower()
-            if "hello bablu" in command and not activate:
-                print("🧠 Activating Bablu...")
+            if f"hello {assistant_name}" in command and not activate:
+                print(f"🧠 Activating {assistant_name}...")
                 activate = True
         except sr.UnknownValueError:
             pass
