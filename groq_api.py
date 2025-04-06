@@ -8,6 +8,7 @@ def needs_camera(prompt: str) -> bool:
     
     response = client.chat.completions.create(
         messages=[
+            
             {"role": "user", "content": check_msg}
         ],
         model="gemma2-9b-it",
@@ -22,8 +23,11 @@ def needs_camera(prompt: str) -> bool:
 
 def send_text_only(prompt: str) -> str:
     response = client.chat.completions.create(
-        messages=[{"role": "user", "content": prompt}],
-        model="gemma2-9b-it",
+        messages=[{
+            "role": "system",
+            "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
+        },{"role": "user", "content": prompt}],
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
         max_tokens=50
     )
     return response.choices[0].message.content.strip()
@@ -32,6 +36,10 @@ def analyze_image(base64_image, prompt="What's in this image?"):
     try:
         chat_completion = client.chat.completions.create(
                 messages=[
+                        {
+                        "role": "system",
+                        "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
+                    },
                     {
                         "role": "user",
                         "content": [
