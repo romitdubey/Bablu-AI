@@ -36,10 +36,10 @@ def analyze_image(base64_image, prompt="What's in this image?"):
     try:
         chat_completion = client.chat.completions.create(
                 messages=[
-                        {
-                        "role": "system",
-                        "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
-                    },
+                    #     {
+                    #     "role": "system",
+                    #     "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
+                    # },
                     {
                         "role": "user",
                         "content": [
