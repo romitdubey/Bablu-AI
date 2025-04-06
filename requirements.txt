@@ -2,3 +2,4 @@ speechrecognition
 opencv-python
 groq
 pyaudio
+elevenlabs

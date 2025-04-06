@@ -1,5 +1,16 @@
-from pydub import AudioSegment
-from pydub.playback import play
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play
 
-sound = AudioSegment.from_wav("speech.wav")
-play(sound)
+def text_to_speech(response):
+    client = ElevenLabs(
+    api_key="sk_9abb3692ef2885f88fef5f57737705752db4823b20ad309a",
+    )
+
+    audio = client.text_to_speech.convert(
+        text=response,
+        voice_id="JBFqnCBsd6RMkjVDRZzb",
+        model_id="eleven_multilingual_v2",
+        output_format="mp3_44100_128",
+    )
+
+    play(audio)

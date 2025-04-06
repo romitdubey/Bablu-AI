@@ -2,6 +2,7 @@ from multimodal_coordinator import handle_multimodal_request
 from groq_api import needs_camera, send_text_only
 import speech_recognition as sr
 import time
+from playsound import text_to_speech
 
 recognizer = sr.Recognizer()
 mic = sr.Microphone()
@@ -31,7 +32,9 @@ def main():
                     handle_multimodal_request(command)
                 else:
                     print(command)
-                    print(send_text_only(command))
+                    res = send_text_only(command)
+                    print(res)
+                    text_to_speech(res)
             else:
                 recognizer.adjust_for_ambient_noise(source,duration=1)
                 print("🕵️ Listening...")
