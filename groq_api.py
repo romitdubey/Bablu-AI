@@ -1,5 +1,7 @@
 from groq import Groq
 from playsound import text_to_speech
+# from dotenv import load_dotenv
+
 
 client = Groq(api_key="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")  # 🔒 Replace with env var for security!
 

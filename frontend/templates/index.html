@@ -1,42 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarvis-like Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffff;
+      overflow: hidden;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      height: 100vh;
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .chat-section {
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid #00ffff33;
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 20px #00ffff44;
+    }
+
+    .messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+      max-height: 70vh;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .user {
+      text-align: right;
+      color: #00ffff;
+    }
+
+    .assistant {
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .input-area {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      background: #000;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      border-radius: 5px;
+    }
+
+    .mic {
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      background: radial-gradient(circle, #00ffff88 0%, #000000 70%);
+      border: 2px solid #00ffff;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .camera-toggle {
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px #00ffff; }
+      50% { box-shadow: 0 0 20px #00ffffaa; }
+      100% { box-shadow: 0 0 5px #00ffff; }
+    }
+
+    .video-section {
+      position: relative;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff44;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px #00ffff55;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #00ffff;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: 1px solid #00ffff44;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="title">Bablu AI</div>
-        
-    </nav>
-
-    <div class="main-section">
-        <div class="chat-section">
-            <div class="chat bablu">
-                <div class="sender">Bablu</div>
-                <div class="message">Hello Bhai kaisa hai?</div>
-            </div>
-            <div class="chat human">
-                <div class="sender">Human</div>
-                <div class="message">Bhai bandi dilwade please!</div>
-            </div>
-            <div class="chat bablu">
-                <div class="sender">Bablu</div>
-                <div class="message">Arrey hawas k pujari</div>
-            </div>
-            <div class="chat human">
-                <div class="sender">Human</div>
-                <div class="message">Abey Saale</div>
-            </div>
-        </div>
-        <div class="camera-section">
-            camera section
-        </div>
+  <div class="container">
+    <div class="chat-section">
+      <div class="messages" id="messages">
+        <div class="message user">Hello Jarvis!</div>
+        <div class="message assistant">Namaste Bhai! Kya help chahiye?</div>
+      </div>
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <div class="mic"></div>
+      </div>
+      <button class="camera-toggle" onclick="toggleCamera()">Toggle Camera</button>
     </div>
+    <div class="video-section">
+      <video id="video" autoplay muted></video>
+      <div class="hud">Live Feed Active</div>
+    </div>
+  </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-  
+  <script>
+    let stream = null;
+    let video = document.getElementById('video');
+
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        video.srcObject = stream;
+      } catch (err) {
+        console.error("Camera error: ", err);
+      }
+    }
+
+    function stopCamera() {
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+      }
+    }
+
+    function toggleCamera() {
+      if (video.srcObject) {
+        stopCamera();
+      } else {
+        startCamera();
+      }
+    }
+
+    function capturePhoto() {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL('image/png');
+
+      // Send to Python backend or save locally
+      console.log("📸 Captured Image", dataURL);
+      // You could emit this via WebSocket or fetch call
+    }
+
+    // Triggered by Python using an exposed function
+    window.triggerCaptureFromPython = capturePhoto;
+
+    // Start camera initially
+    startCamera();
+  </script>
 </body>
 </html>

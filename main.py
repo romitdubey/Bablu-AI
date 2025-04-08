@@ -95,8 +95,7 @@ def main():
                             
                         if not cap.isOpened():
                             print("Error: Could not open webcam.")
-                        
-                        # Start a thread-like loop to show camera in background
+
                         def show_camera(activate,cap):
                             cv2.namedWindow(f"{assistant_name} Cam", cv2.WINDOW_NORMAL)
                             cv2.resizeWindow(f"{assistant_name} Cam", 640, 480)
@@ -117,7 +116,7 @@ def main():
                 except Exception as e:
                     print(f"Unexpected error: {e}")
 
-            time.sleep(1)
+            # time.sleep(1)
             command = ""
 
 
