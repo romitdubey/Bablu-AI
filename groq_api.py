@@ -4,12 +4,17 @@ from playsound import text_to_speech
 client = Groq(api_key="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")  # 🔒 Replace with env var for security!
 
 def needs_camera(prompt: str) -> bool:
-    check_msg = f"Does this question require seeing something visually (e.g. camera or image)? Answer Yes or No only: {prompt}"
-    
     response = client.chat.completions.create(
         messages=[
-            
-            {"role": "user", "content": check_msg}
+            {"role": "system","content":'''You are a smart judge. Your only job is to decide whether the user's message needs image or camera input to answer.
+
+            If the user is asking about something they are holding, showing, or referring to visually — like "what’s in my hand", "how many fingers", "count candies", "what is this", or "solve this" without giving full details — then reply "Yes".
+
+            If the message can be answered without seeing anything — like general knowledge, text-based questions, or math with numbers provided — reply "No".
+
+            Reply only with "Yes" or "No". No explanation. No extra words. You can answer in English or Hinglish, but only say "Yes" or "No".
+            '''},
+            {"role": "user", "content": prompt}
         ],
         model="gemma2-9b-it",
         max_tokens=5
@@ -21,13 +26,10 @@ def needs_camera(prompt: str) -> bool:
         text_to_speech("Opening camera...")
     return "yes" in reply
 
-def send_text_only(prompt: str) -> str:
+def send_text_only(prompt: str,messages) -> str:
     response = client.chat.completions.create(
-        messages=[{
-            "role": "system",
-            "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
-        },{"role": "user", "content": prompt}],
-        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        messages=messages,
+        model="meta-llama/llama-4-scout-17b-16e-instruct"
     )
     return response.choices[0].message.content.strip()
 

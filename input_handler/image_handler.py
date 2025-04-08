@@ -1,5 +1,6 @@
 import cv2
 import base64
+import time
 
 def capture_image(cap,filename='capture.jpg', camera_index=1):
     ret, frame = cap.read()

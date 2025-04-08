@@ -2,6 +2,7 @@ from input_handler.image_handler import capture_image, encode_image
 from groq_api import analyze_image
 from playsound import text_to_speech
 
+
 def handle_multimodal_request(command,cap):
     print("Opening camera...")
     image_path = capture_image(cap)
