@@ -145,7 +145,7 @@ capture.jpg
 
 # mkdocs documentation
 /site
-
+/avatar/node_modules
 # mypy
 .mypy_cache/
 .dmypy.json
