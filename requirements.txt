@@ -4,3 +4,5 @@ groq
 pyaudio
 elevenlabs
 dotenv
+firebase_admin
+flask

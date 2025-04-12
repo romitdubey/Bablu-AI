@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,9 +92,17 @@
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 5px #00ffff; }
-      50% { box-shadow: 0 0 20px #00ffffaa; }
-      100% { box-shadow: 0 0 5px #00ffff; }
+      0% {
+        box-shadow: 0 0 5px #00ffff;
+      }
+
+      50% {
+        box-shadow: 0 0 20px #00ffffaa;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #00ffff;
+      }
     }
 
     .video-section {
@@ -125,8 +134,9 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
+  <!-- <div class="container">
     <div class="chat-section">
       <div class="messages" id="messages">
         <div class="message user">Hello Jarvis!</div>
@@ -142,8 +152,16 @@
       <video id="video" autoplay muted></video>
       <div class="hud">Live Feed Active</div>
     </div>
-  </div>
+  </div> -->
 
+  <div>
+    <form>
+      <label>Select your resume</label>
+      <input type="file" name="resume" id="resume">
+      <button type="submit" id="submit">Submit</button>
+    </form>
+
+  </div>
   <script>
     let stream = null;
     let video = document.getElementById('video');
@@ -192,5 +210,42 @@
     // Start camera initially
     startCamera();
   </script>
+
+  <!-- Firebase -->
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCxuvCpAfSSmhd7cVS3Wzm3bnd3GoQudQ",
+      authDomain: "hackathons-5f2de.firebaseapp.com",
+      projectId: "hackathons-5f2de",
+      storageBucket: "hackathons-5f2de.firebasestorage.app",
+      messagingSenderId: "515532031820",
+      appId: "1:515532031820:web:bd9a665daae44dab0231e9",
+      measurementId: "G-MDS30FJ11V"
+    };
+
+    const firebase_app = initializeApp(firebaseConfig);
+    const storage = getStorage(firebase_app);
+    console.log(storage);
+
+    let submitBtn = document.getElementById('submit');
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let input = document.getElementById('resume');
+      console.log(input)
+
+      let resume = input.files[0];
+      console.log(resume)
+    })
+
+
+
+
+  </script>
+
 </body>
+
 </html>
