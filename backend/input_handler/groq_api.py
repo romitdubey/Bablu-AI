@@ -1,27 +1,23 @@
 from groq import Groq
 from playsound import text_to_speech
-# from dotenv import load_dotenv
+import json
+from dotenv import load_dotenv
 
+load_dotenv()
 
-client = Groq(api_key="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")  # 🔒 Replace with env var for security!
+client = Groq("GROQ_API_KEY")  # 🔒 Replace with env var for security!
+prompts = json.load(open("prompts.json"))
+
 
 def needs_camera(prompt: str) -> bool:
     response = client.chat.completions.create(
         messages=[
-            {"role": "system","content":'''You are a smart judge. Your only job is to decide whether the user's message needs image or camera input to answer.
-
-            If the user is asking about something they are holding, showing, or referring to visually — like "what’s in my hand", "how many fingers", "count candies", "what is this", or "solve this" without giving full details — then reply "Yes".
-
-            If the message can be answered without seeing anything — like general knowledge, text-based questions, or math with numbers provided — reply "No".
-
-            Reply only with "Yes" or "No". No explanation. No extra words. You can answer in English or Hinglish, but only say "Yes" or "No".
-            '''},
+            {"role": "system","content":prompts["camera_prompt"]},
             {"role": "user", "content": prompt}
         ],
         model="gemma2-9b-it",
         max_tokens=5
     )
-
     reply = response.choices[0].message.content.strip().lower()
     if "yes" in reply:
         print("Opening camera...")
@@ -39,10 +35,6 @@ def analyze_image(base64_image, prompt="What's in this image?"):
     try:
         chat_completion = client.chat.completions.create(
                 messages=[
-                    #     {
-                    #     "role": "system",
-                    #     "content": "You're Bablu. An indian character. Reply in funny hinglish everytime. Don't use more than 50 words always."
-                    # },
                     {
                         "role": "user",
                         "content": [

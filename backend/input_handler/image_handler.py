@@ -1,7 +1,8 @@
-from input_handler.image_handler import capture_image, encode_image
-from groq_api import analyze_image
+import cv2
+import base64
+import time
+from backend.input_handler.groq_api import analyze_image
 from playsound import text_to_speech
-
 
 def handle_multimodal_request(command,cap):
     print("Opening camera...")
@@ -18,3 +19,17 @@ def handle_multimodal_request(command,cap):
         text_to_speech(response)
     else:
         print("❌ No response from Jarvis.")
+
+def capture_image(cap,filename='capture.jpg', camera_index=1):
+    ret, frame = cap.read()
+
+    if not ret:
+        print("Error: Failed to capture image.")
+        return None
+
+    cv2.imwrite(filename, frame)
+    return filename
+
+def encode_image(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
