@@ -1,8 +1,8 @@
 import cv2
 import base64
 import time
-from backend.input_handler.groq_api import analyze_image
-from playsound import text_to_speech
+from config.groq_api import analyze_image
+from config.playsound import text_to_speech
 
 def handle_multimodal_request(command,cap):
     print("Opening camera...")

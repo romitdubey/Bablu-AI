@@ -1,11 +1,11 @@
 from groq import Groq
-from playsound import text_to_speech
+from .playsound import text_to_speech
 import json
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Groq("GROQ_API_KEY")  # 🔒 Replace with env var for security!
+client = Groq()  # 🔒 Replace with env var for security!
 prompts = json.load(open("prompts.json"))
 
 
