@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Groq()  # 🔒 Replace with env var for security!
+client = Groq()
 prompts = json.load(open("prompts.json"))
 
 
@@ -55,3 +55,52 @@ def analyze_image(base64_image, prompt="What's in this image?"):
     except Exception as e:
         print(f"❌ Error calling GROQ: {e}")
         return None
+
+def parse_resume_with_groq(text):
+    prompt = f"""
+    You are a resume parser. Extract the following fields from this resume in JSON format:
+    - Name
+    - Email
+    - Phone
+    - Education
+    - Skills
+    - Experience
+    - Projects
+    - Certifications
+    Resume Text:
+    \"\"\"{text}\"\"\"
+    """
+
+    response = client.chat.completions.create(
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2
+    )
+
+    return response.choices[0].message.content
+
+def parse_job_description(text):
+    prompt = f"""
+        You are an expert assistant designed to extract structured information from job descriptions. Given a block of unstructured JD text, return a clean, structured JSON object with the following fields:
+
+        - job_title: (The job title or role)
+        - company_name: (If mentioned)
+        - location: (If mentioned)
+        - employment_type: (e.g., Full-time, Contract, Remote, Hybrid)
+        - responsibilities: (List of main responsibilities or duties)
+        - required_skills: (Key technical or soft skills required)
+        - qualifications: (Educational or certification requirements)
+        - experience_required: (Years of experience or relevant fields)
+        - technologies: (Specific tools, languages, or platforms mentioned)
+
+        Respond with **only a valid JSON object**. If a field is not present in the JD, return it with `null`.
+    \"\"\"{text}\"\"\"
+    """
+
+    response = client.chat.completions.create(
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2
+    )
+
+    return response.choices[0].message.content.strip()

@@ -6,3 +6,5 @@ elevenlabs
 dotenv
 firebase_admin
 flask
+python-docx
+PyPDF2
