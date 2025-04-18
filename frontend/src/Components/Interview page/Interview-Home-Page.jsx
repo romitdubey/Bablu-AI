@@ -26,7 +26,7 @@ const HomePage = () => {
     return (
         <section className="homePage-section">
             <div className="row">
-                <div className="col-md-2 col-sm-4 p-0">
+                <div className="col-md-2 col-sm-4 p-0 subcontainers">
                     <div className="chat-section AI-height">
                         <div className="messages" id="messages">
                             <div className="message user"><i class="fa-thin fa-user"></i></div>
@@ -38,7 +38,7 @@ const HomePage = () => {
 
                     </div>
                 </div>
-                <div className="col-md-6 col-sm-6 p-0">
+                <div className="col-md-5 col-sm-6 p-0 subcontainers">
                     <div className="chat-section AI-height">
                         <div className="messages" id="messages">
                             <div className="message user">Hello Bablu!</div>
@@ -53,13 +53,13 @@ const HomePage = () => {
                     </div>
                     
                 </div>
-                <div className="col-md-4 col-sm-12">
-                    <div className="video-section AI-height">
+                <div className="col-md-4 col-sm-12 subcontainers">
+                    <div className="chat-section AI-height">
                         <video ref={videoRef} autoPlay muted className={(isCameraOn) ? 'demo' : 'background'} ></video>
                         <div className="hud">Live Feed Active</div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </section>
     )
 }
