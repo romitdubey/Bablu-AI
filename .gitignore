@@ -173,3 +173,6 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 capture.jpg
+
+# node modules of frontend
+./frontend/node_modules

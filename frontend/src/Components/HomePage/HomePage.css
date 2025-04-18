@@ -1,0 +1,60 @@
+.home-main {
+    /* height: 90vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-box {
+    text-align: center;
+    width: 50%;
+}
+
+.text-interview-ai{
+    font-size: 4rem;
+    font-weight: bold;
+
+}
+.text-interview {
+    background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.text-ai {
+    color: antiquewhite;
+}
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.loder{
+  position: relative;
+}
+
+.spin {
+      /* position: absolute; */
+    transform-origin: center;
+    animation: spin 2s linear infinite;
+    /* width: 300px; */
+  }
+.custom-icon{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 36%;
+    font-size: 130px;
+}
+
+@media (max-width: 768px) {
+    .text-interview-ai{
+        font-size: 4rem;
+        font-weight: bold;
+    
+    }
+  }
