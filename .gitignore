@@ -174,5 +174,5 @@ cython_debug/
 .pypirc
 capture.jpg
 
-# node modules of frontend
-frontend/node_modules
+# node modules 
+node_modules/

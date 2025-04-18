@@ -48,13 +48,15 @@
     width: 100%;
     left: 0;
     top: 36%;
-    font-size: 130px;
+    font-size: 11vw;
 }
 
 @media (max-width: 768px) {
     .text-interview-ai{
-        font-size: 4rem;
-        font-weight: bold;
-    
+        font-size: 2rem;
+        font-weight: bold;    
+    }
+    .inner-box h5{
+        font-size: 1rem; 
     }
   }

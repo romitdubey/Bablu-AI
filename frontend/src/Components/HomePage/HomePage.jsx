@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./HomePage.css"
 import { FaAirbnb } from 'react-icons/fa'
+import SignupForm from '../LoginSignup/SignupForm'
+import LoginForm from '..//LoginSignup/LoginForm'
+
 const HomePage = () => {
+
+    const [showLogin, setShowLogin] = useState(true);
 
     return (
         <section className='home-page-section'>
@@ -19,13 +24,18 @@ const HomePage = () => {
                                     strokeLinecap="round" />
                             </svg>
                             <FaAirbnb className='custom-icon' />
-                            {/* <div>
-                            </div> */}
+
                         </div>
                     </div>
                 </div>
             </div>
+
+            {showLogin ? 
+            <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} /> : 
+            <SignupForm showLogin={showLogin} setShowLogin={setShowLogin} />}
+
         </section>
+
     )
 }
 
