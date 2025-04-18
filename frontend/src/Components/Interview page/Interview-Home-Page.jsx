@@ -41,7 +41,7 @@ const HomePage = () => {
                 <div className="col-md-6 col-sm-6 p-0">
                     <div className="chat-section AI-height">
                         <div className="messages" id="messages">
-                            <div className="message user">Hello Jarvis!</div>
+                            <div className="message user">Hello Bablu!</div>
                             <div className="message assistant">Namaste Bhai! Kya help chahiye?</div>
                         </div>
                         <div className="input-area">

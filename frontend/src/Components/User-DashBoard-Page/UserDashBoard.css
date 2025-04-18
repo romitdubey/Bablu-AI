@@ -1,0 +1,21 @@
+.user-info{
+    /* display: flex; */
+    /* text-align: center; */
+    justify-content: center;
+    align-items: center;
+    /* background: linear-gradient(135deg, #232526, #414345); */
+    background: linear-gradient(135deg, rgba(35, 37, 38, 0.5), rgba(65, 67, 69, 0.5));
+    border-radius: 0 30px 30px 0;
+
+}
+.user-head{
+    display: flex;
+    justify-content: space-between;
+}
+.user-dashboard-icon{
+    width: 100%;
+    color: cyan;
+}
+.inner-box{
+    width: 100%;
+}
