@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './LoginSignupform.css';
 
 const LoginForm = ({ showLogin, setShowLogin }) => {
+    console.log("hello");
     const [formData, setFormData] = useState({
         name: '',
         number: '',

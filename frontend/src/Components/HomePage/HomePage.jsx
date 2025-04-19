@@ -30,11 +30,11 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div id="login-section">
+            {/* <div id="login-section">
                 {showLogin ?
-                    <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} /> :
-                    <SignupForm showLogin={showLogin} setShowLogin={setShowLogin} />}
-            </div>
+                    // <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} /> :
+                    // <SignupForm showLogin={showLogin} setShowLogin={setShowLogin} />}
+            </div> */}
 
         </section>
 
