@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginSignupform.css';
+import {signup} from "../../firebase.js"
 
 const SignupForm = ({showLogin, setShowLogin}) => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,15 @@ const SignupForm = ({showLogin, setShowLogin}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
+    console.log(formData);    
+    
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    signup(formData.email, formData.password);   
+
   };
 
   return (<>
@@ -47,11 +55,11 @@ const SignupForm = ({showLogin, setShowLogin}) => {
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="password" name="password" placeholder='Enter Password' value={formData.password} onChange={handleChange} required />
+              <input type="password" className="form-control" id="password" name="password" placeholder='Enter Password' value={formData.password} onChange={handleChange} minLength={6} required />
             </div>
             <div className="mb-4">
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-              <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' value={formData.confirmPassword} onChange={handleChange} required />
+              <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' value={formData.confirmPassword} onChange={handleChange} minLength={6} required />
             </div>
             <button type="submit" className="btn btn-primary w-100">Create Account</button>
           </form>
