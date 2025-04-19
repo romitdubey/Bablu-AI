@@ -1,22 +1,24 @@
-.user-info{
-    /* display: flex; */
-    /* text-align: center; */
+.user-info {
+    padding: 30px;
     justify-content: center;
     align-items: center;
-    /* background: linear-gradient(135deg, #232526, #414345); */
     background: linear-gradient(135deg, rgba(35, 37, 38, 0.5), rgba(65, 67, 69, 0.5));
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px;
+    position: fixed;
 
 }
-.user-head{
+
+.user-head {
     display: flex;
     justify-content: space-between;
 }
-.user-dashboard-icon{
+
+.user-dashboard-icon {
     width: 100%;
     color: cyan;
 }
-.inner-box{
+
+.inner-box {
     width: 100%;
 }
 
@@ -122,4 +124,26 @@
     color: #fff;
     background-image: linear-gradient(to bottom, var(--fancy-button-gradient-0) 0%, var(--fancy-button-gradient-50) 50%, var(--fancy-button-gradient-100) 100%);
     box-shadow: 0px 4px 12px rgba(9, 12, 60, 0.15), 0px 2px 8px rgba(9, 12, 60, 0.15), 0px 1px 3px var(--fancy-button-inner-shadow-top-lg), inset 0px 1px 1px var(--fancy-button-inner-shadow-top), inset 0px -1px 3px var(--fancy-button-inner-shadow-bottom);
+}
+
+.user-inner-info div {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.user-profile {
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.dashboard-icons {
+    font-size: 20px;
+    margin: 1vw 0;
+}
+
+/* User content side(right) */
+.user-content {
+    position: relative;
+    left: 15vw;
 }
