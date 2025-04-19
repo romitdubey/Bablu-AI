@@ -5,6 +5,7 @@ import HomePage from './Components/HomePage/HomePage'
 import AppLayout from './Layout/AppLayout'
 import LoginForm from './Components/LoginSignup/LoginForm'
 import SignupForm from './Components/LoginSignup/SignupForm'
+import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
       children: [
         { path: "/", element: <HomePage /> },
         { path: "/login", element: <LoginForm /> },
-        { path: "/signup", element: <SignupForm /> }
+        { path: "/signup", element: <SignupForm /> },
+        { path: "/dashboard", element: <UserDashBoard /> }
       ]
     }]
   )

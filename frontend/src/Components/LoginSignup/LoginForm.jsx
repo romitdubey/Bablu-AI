@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './LoginSignupform.css';
 import { login } from "../../firebase.js";
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ showLogin, setShowLogin }) => {
-    console.log("hello");
+    const Navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -26,7 +27,7 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
         if (status == null) {
             alert("Login Failed! Please check your credentials.");
         } else {            
-            window.location.href = "https://localhost:5173/Dashboard"
+            Navigate("/dashboard");
         }
 
 
