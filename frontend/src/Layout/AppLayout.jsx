@@ -10,7 +10,7 @@ const AppLayout = () => {
    <Header/>
    {/* <SignupForm/> */}
    <HomePage/>
-   <Interview_Home_Page />
+   {/* <Interview_Home_Page /> */}
    {/* <HomePage/> */}
    {/* <UserDashBoard/> */}
    </>
