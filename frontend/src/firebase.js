@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDCxuvCpAfSSmhd7cVS3Wzm3bnd3GoQudQ",
@@ -13,10 +14,11 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+
 
 export async function signup(mail, pswd) {
     try{
+        const auth = getAuth(app);
         const userCred = await createUserWithEmailAndPassword(auth, mail, pswd);
         return userCred
     }
@@ -28,11 +30,28 @@ export async function signup(mail, pswd) {
 
 export async function login(mail, pswd) {
     try{
+        const auth = getAuth(app);
         const userCred = await signInWithEmailAndPassword(auth, mail, pswd);
         return userCred
     }
     catch(err){
         console.log(err);
         return null
+    }
+}
+
+export async function uploadResume(resumeFile){
+    try{
+        const storage = getStorage(app)
+        const resumeRef = ref(storage, 'resumes/userId'); 
+        const snapshot = await uploadBytes(resumeRef, resumeFile)
+        console.log("Success!")
+        console.log(snapshot);
+        return snapshot
+    }
+    catch(err){
+        console.log("Oops, some error occured.");
+        console.error(err);
+        return null;
     }
 }
