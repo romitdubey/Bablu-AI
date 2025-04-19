@@ -8,11 +8,9 @@ const AppLayout = () => {
   return (
    <> 
    <Header/>
-   {/* <SignupForm/> */}
-   <HomePage/>
    {/* <Interview_Home_Page /> */}
    {/* <HomePage/> */}
-   {/* <UserDashBoard/> */}
+   <UserDashBoard/>
    </>
   )
 }

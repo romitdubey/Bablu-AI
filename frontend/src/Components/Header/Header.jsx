@@ -23,13 +23,13 @@ const Header = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <Link className="nav-link text-color" aria-current="page" to="#">About Us</Link>
+                            <Link className="nav-link text-color" aria-current="page" to="/dashboard">Dashboard</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-color"  to="#">Contact Us</Link>
+                            <a className="nav-link text-color" href="#login-section">Login</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-color" to="#">Login</a>
+                            <a className="nav-link text-color" href="#login-section">Signup</a>
                         </li>
                     </ul>
                 </div>
