@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import './LoginSignupform.css';
+import { login } from "../../firebase.js";
 
 const LoginForm = ({ showLogin, setShowLogin }) => {
     console.log("hello");
     const [formData, setFormData] = useState({
-        name: '',
-        number: '',
         email: '',
         password: '',
-        confirmPassword: '',
     });
 
     const handleChange = (e) => {
@@ -18,10 +16,20 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission here
+
         console.log(formData);
+
+        let status = await login(formData.email, formData.password);
+
+        if (status == null) {
+            alert("Login Failed! Please check your credentials.");
+        } else {            
+            window.location.href = "https://localhost:5173/Dashboard"
+        }
+
+
     };
 
     return (<>
@@ -34,17 +42,17 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email address</label>
-                            <input type="loginEmail" className="form-control" id="loginEmail" name="loginEmail" placeholder='Enter Email' value={formData.email} onChange={handleChange} required />
+                            <input type="email" className="form-control" id="loginEmail" name="email" placeholder='Enter Email' value={formData.email} onChange={handleChange} required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="loginPassword" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="loginPassword" name="loginPassword" placeholder='Enter Password' value={formData.password} onChange={handleChange} required />
+                            <input type="password" className="form-control" id="loginPassword" name="password" placeholder='Enter Password' value={formData.password} onChange={handleChange} minLength={6} required />
                         </div>
                         <button type="submit" className="btn btn-primary w-100">Login</button>
                     </form>
                     <p className="mt-3 text-center">
-                        Don't have an account? 
-                        <button className="cool-btn" onClick={()=>setShowLogin(!showLogin)}>Sign Up</button>
+                        Don't have an account?
+                        <button className="cool-btn" onClick={() => setShowLogin(!showLogin)}>Sign Up</button>
                     </p>
                 </div>
 
