@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './LoginSignupform.css';
-import {signup} from "../../firebase.js"
+import { auth } from "../../firebase.js"
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({showLogin, setShowLogin}) => {
+
+  const Navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     number: '',
@@ -18,7 +23,7 @@ const SignupForm = ({showLogin, setShowLogin}) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);    
     
@@ -27,7 +32,16 @@ const SignupForm = ({showLogin, setShowLogin}) => {
       return;
     }
 
-    signup(formData.email, formData.password);   
+    try{
+      const userCred = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      console.log(userCred);
+      Navigate("/login");
+    }
+    catch(err){
+      console.log(err);
+      alert("Signup Failed! Please check your credentials.");
+    }
+    
 
   };
 
