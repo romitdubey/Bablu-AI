@@ -22,6 +22,80 @@
     width: 100%;
 }
 
+.upload-container {
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    gap: 5px;
+    margin: auto;
+}
+
+.also-resume-label {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    ;
+}
+
+.resume-header {
+    flex: 1;
+    width: 100%;
+    border: 2px dashed royalblue;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.resume-header svg {
+    height: 100px;
+}
+
+.resume-header p {
+    text-align: center;
+    color: white;
+    margin-bottom: 0;
+    padding: 3vw;
+}
+
+.footer {
+    background-color: rgba(0, 110, 255, 0.075);
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: white;
+    border: none;
+}
+
+.footer svg {
+    height: 130%;
+    fill: royalblue;
+    background-color: rgba(70, 66, 66, 0.103);
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+
+.footer p {
+    flex: 1;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+
 .user-inner-info div {
     display: flex;
     /* justify-content: center; */
@@ -42,4 +116,75 @@
 .user-content {
     position: relative;
     left: 15vw;
+}
+
+/* JD CSS */
+/* From Uiverse.io by SouravBandyopadhyay */
+.jd-label {
+    color: #262626;
+    font-size: 1.5em;
+    line-height: normal;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.jd-desc {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5em;
+    color: #452c2c;
+    border-radius: 10px;
+    padding: 1vw;
+}
+
+.jd-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-height: 320px;
+    background-color: #f2f8f9;
+    border-radius: 10px;
+    padding: 3vw;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #293436, #878787);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.jd-card:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    right: -16px;
+    background: linear-gradient(135deg, #364a60, #384c6c);
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform 0.35s ease-out;
+}
+
+.jd-card:hover:before {
+    transform: scale(28);
+}
+
+.jd-card:hover .jd-desc {
+    transition: all 0.5s ease-out;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.jd-card:hover .jd-label {
+    transition: all 0.5s ease-out;
+    color: #ffffff;
+}
+
+.upload-btn{
+    margin: auto;
+    display: block;
+    padding: 1rem;
+    font-size: 1.5em;
 }
