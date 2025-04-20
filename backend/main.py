@@ -1,4 +1,4 @@
-from core.assistant import start_assistant
+from backend.redundant.assistant import start_assistant
 from core.resume_parsing import extract_text_from_pdf, extract_text_from_docx
 from config.groq_api import parse_resume_with_groq
 if __name__ == "__main__":

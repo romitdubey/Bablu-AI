@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from core.state import assistant_state
+from backend.redundant.state import assistant_state
 
 recognizer = sr.Recognizer()
 mic = sr.Microphone()

@@ -1,7 +1,7 @@
-from core.voice import listen_for_activation, listen_for_command
-from core.command_handler import process_command
-from core.state import assistant_state
-from core.camera import initialize_camera, show_camera
+from backend.redundant.voice import listen_for_activation, listen_for_command
+from backend.redundant.command_handler import process_command
+from backend.redundant.state import assistant_state
+from backend.redundant.camera import initialize_camera, show_camera
 import threading
 
 def start_assistant():
