@@ -25,6 +25,7 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
         try{
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("Successfully logged in", userCred);
+            localStorage.setItem("UserCred", JSON.stringify(userCred));
             navigate("/dashboard");
             
         }catch(err){

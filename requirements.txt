@@ -9,3 +9,4 @@ flask
 python-docx
 PyPDF2
 flask_restful
+flask-cors

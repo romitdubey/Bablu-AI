@@ -10,7 +10,7 @@ import './UserDashBoard.css'
 
 const UserDashBoard = () => {
 
-    const navigate = useNavigate();
+    const Navigate = useNavigate();
     const [userNavWidth, setUserNavWidth] = useState(false);
     const dashBoardSlider = () => {
         if (userNavWidth == true) {
@@ -40,15 +40,27 @@ const UserDashBoard = () => {
         if (resumeFile.type !== "application/pdf") {
             alert("Please upload a PDF file.");
             return;
-        }
+        }        
 
         try {
             const resumeRef = ref(storage, 'resumes/userId');
             const snapshot = await uploadBytes(resumeRef, resumeFile)
             console.log("Success!")
             console.log(snapshot);
-            fetch("http://127.0.0.1:5000/pdf/userId")
-            navigate("/interview");
+
+            fetch("http://127.0.0.1:5000/startInterview", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    resumeId: "userId",
+                    jobDesc: jd,
+                    userDetails: localStorage.getItem("UserCred")
+                }),
+            })
+
+            Navigate("/interview");
         }
         catch (err) {
             console.log("Oops, some error occured.");
