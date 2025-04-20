@@ -4,8 +4,10 @@ import { CgProfile } from "react-icons/cg";
 import { BiArrowFromLeft } from "react-icons/bi";
 
 import './UserDashBoard.css'
+import { useNavigate } from 'react-router-dom';
 
 const UserDashBoard = () => {
+    const Navigate = useNavigate();
     const [userNavWidth, setUserNavWidth] = useState(false);
     const dashBoardSlider = () => {
         if (userNavWidth == true) {
@@ -15,6 +17,9 @@ const UserDashBoard = () => {
             setUserNavWidth(true);
         }
         console.log(userNavWidth)
+    }
+    const userLogout = () =>{
+        Navigate("/");
     }
     return (
         <section className="user-dashbord">
@@ -46,7 +51,7 @@ const UserDashBoard = () => {
                                         <BiArrowFromLeft className='fs-5 m-2' />
                                         <h6>demo1</h6>
                                     </div>
-                                    <button className='btn btn-danger'>Logout</button>
+                                    <button className='btn btn-danger' onClick={userLogout}>Logout</button>
                                 </div>
                             </div>
                             : <div onClick={dashBoardSlider}>
