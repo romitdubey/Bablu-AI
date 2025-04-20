@@ -2,7 +2,8 @@ from flask import Flask, send_file, jsonify
 from flask_restful import Resource, Api
 import os
 from firebase_admin import credentials, initialize_app, storage
-
+from backend.config.groq_api import parse_resume_with_groq
+from backend.core.resume_parsing import extract_text_from_pdf, extract_text_from_docx
 # Initialize Flask app
 app = Flask(__name__)
 api = Api(app)
@@ -36,9 +37,15 @@ class PdfFetcher(Resource):
                 return {"error": "PDF not found"}, 404
             
             # Create a temporary file to store the PDF
-            temp_file = f'temp_{pdf_id}.pdf'
+            outside_folder = os.path.join(os.path.dirname(current_dir), 'resume')
+            os.makedirs(outside_folder, exist_ok=True)
+            temp_file = os.path.join(outside_folder, f'{pdf_id}.pdf')
             blob.download_to_filename(temp_file)
-            
+            print(1)
+            resume_text = extract_text_from_pdf(temp_file)
+            print(2)
+            parsed_resume = parse_resume_with_groq(resume_text)
+            print(parsed_resume)
             # Send the file to the client
             response = send_file(
                 temp_file,
