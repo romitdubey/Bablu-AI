@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = Groq()
-prompts = json.load(open("prompts.json"))
+prompts = json.load(open("backend\prompts.json"))
 
 
 def needs_camera(prompt: str) -> bool:
