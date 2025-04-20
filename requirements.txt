@@ -8,3 +8,4 @@ firebase_admin
 flask
 python-docx
 PyPDF2
+flask_restful
