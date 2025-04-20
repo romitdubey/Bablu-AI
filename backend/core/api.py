@@ -13,13 +13,15 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 firebase_key_path = os.path.join(os.path.dirname(current_dir), 'FirebaseKey.json')
 cred = credentials.Certificate(firebase_key_path)
 firebase_app = initialize_app(cred, {
-    'storageBucket': 'hackathons-5f2de.appspot.com'  # Corrected bucket name format
+    # 'storageBucket': 'hackathons-5f2de.appspot.com'  # Corrected bucket name format
+    'storageBucket': 'hackathons-5f2de.firebasestorage.app'  # Corrected bucket name format
 })
 
 class PdfFetcher(Resource):
     def get(self, pdf_id):
         try:
             # Get a reference to the Firebase Storage bucket
+            print(firebase_app)
             print(pdf_id)
             bucket = storage.bucket()
             
@@ -30,6 +32,7 @@ class PdfFetcher(Resource):
             print(blob)
             
             if not blob.exists():
+                print("Not found")
                 return {"error": "PDF not found"}, 404
             
             # Create a temporary file to store the PDF
@@ -56,3 +59,6 @@ api.add_resource(PdfFetcher, "/pdf/<string:pdf_id>")
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
