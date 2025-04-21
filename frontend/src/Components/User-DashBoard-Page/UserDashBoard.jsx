@@ -46,10 +46,13 @@ const UserDashBoard = () => {
             alert("Upload Failed! Please try again.");
         } else {
             alert("Upload Successful!");
-            window.location.href = "https://localhost:5173/interview"
+            // window.location.href = "https://localhost:5173/interview"
         }
     }
-
+    const  userLogout = () => {
+        // localStorage.removeItem("userData");
+        Navigate("/login");
+    }
     return (
         <section className="user-dashbord">
             <div className=''>
@@ -136,7 +139,7 @@ const UserDashBoard = () => {
                                     }} />
                                 </div>
                                 <div className='jd-card'>
-                                    <label for="jd" class="jd-label">Job Description</label>
+                                    <label htmlFor="jd" className="jd-label">Job Description</label>
 
                                     <textarea className='jd-desc' id="jd" name="jd" rows="4" cols="30" value={jd} placeholder='Enter Job Description' onChange={(e) => {setJd(e.target.value)}}>
                                     </textarea>

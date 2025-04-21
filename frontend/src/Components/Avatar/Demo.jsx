@@ -1,21 +1,34 @@
-import React from 'react'
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import Avatar from './Avatar';
+// import { Canvas, useThree } from "@react-three/fiber";
+// import { OrbitControls, useTexture } from "@react-three/drei";
+// import { Environment } from "@react-three/drei";
+// import { Avatar } from "./Avatar";
 
-// App.jsx or AvatarScene.jsx
+// // hooks can't be applied on main function in three js
+// function BackgroundPlane() {
+//   const texture = useTexture("textures/AI_Background.jpg"); // load image
+//   const viewport = useThree((state) => state.viewport); // set width of image according to viewport
+//   return (
+//     <mesh>
+//       <planeGeometry args={[viewport.width, viewport.height]} />
+//       <meshBasicMaterial map={texture} />
+//     </mesh>
+//   )
+// }
+// function Demo() {
 
-const Demo = () => {
-    return (
-        <div>
-            <Canvas camera={{ position: [0, 2, 5] }}>
-                <ambientLight />
-                <pointLight position={[10, 10, 10]} />
-                <OrbitControls />
-                <Avatar />
-            </Canvas>
-        </div>
-    )
-}
 
-export default Demo
+//   return (
+//     <div className="avatar-container ">
+
+//       <Canvas className="posit" shadows camera={{ position: [0, 0, 7], fov: 50 }}>
+//         <color attach="background" args={["#ececec"]} />
+//         <Avatar position={[0, -3, 5]} scale={2} />
+//         <Environment preset="sunset" />
+//         <OrbitControls />
+//         <BackgroundPlane/>
+//       </Canvas>
+//     </div>
+//   );
+// }
+
+// export default Demo;

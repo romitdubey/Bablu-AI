@@ -121,7 +121,8 @@
 /* JD CSS */
 /* From Uiverse.io by SouravBandyopadhyay */
 .jd-label {
-    color: #262626;
+    color: #c2ddde;
+    text-align: center;
     font-size: 1.5em;
     line-height: normal;
     font-weight: 700;
@@ -132,9 +133,10 @@
     font-size: 1em;
     font-weight: 400;
     line-height: 1.5em;
-    color: #452c2c;
+    color: #c2ddde;
     border-radius: 10px;
     padding: 1vw;
+    background-color: grey;
 }
 
 .jd-card {

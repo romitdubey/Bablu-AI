@@ -1,12 +1,32 @@
-import React from 'react'
-import Demo from './Components/Avatar/Demo'
+import { createBrowserRouter, BrowserRouter as Route, Router, RouterProvider, Routes } from 'react-router-dom'
+import './App.css'
+// import Header from './Components/Header/Header'
+import HomePage from './Components/HomePage/HomePage'
+import AppLayout from './Layout/AppLayout'
+import LoginForm from './Components/LoginSignup/LoginForm'
+import SignupForm from './Components/LoginSignup/SignupForm'
+import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
 
-const App = () => {
-  return (
-    <div>
-      <Demo/>
-    </div>
+import InterviewHomePage from './Components/Interview page/Interview-Home-Page'
+import { Experience } from './Components/Avatar/Experience'
+
+const router = createBrowserRouter([
+  {
+      path: "/",
+      element: <AppLayout />,
+      // errorElement:<ErrorPage />,
+      children: [
+        { path: "/", element: <HomePage /> },
+        { path: "/login", element: <LoginForm /> },
+        { path: "/signup", element: <SignupForm /> },
+        { path: "/dashboard", element: <UserDashBoard /> },
+        { path: "/avatar", element: <Experience /> },
+        { path: "/interview", element: <InterviewHomePage /> }
+      ]
+    }]
   )
+  function App() {
+  return <RouterProvider router={router}></RouterProvider>
 }
 
 export default App

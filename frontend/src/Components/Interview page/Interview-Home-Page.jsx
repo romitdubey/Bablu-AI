@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './Interview-Home-Page.css';
+import { Experience } from '../Avatar/Experience';
 const HomePage = () => {
     const [isCameraOn, setIsCameraOn] = useState(false);
     const videoRef = useRef(null);
@@ -29,7 +30,7 @@ const HomePage = () => {
                 <div className="col-md-2 col-sm-4 p-0 subcontainers">
                     <div className="chat-section ">
                         <div className="messages" id="messages">
-                            <div className="message user"><i class="fa-thin fa-user"></i></div>
+                            <div className="message user"><i className="fa-thin fa-user"></i></div>
                             <div className="message assistant">Chat History...</div>
                         </div>
                         <div className="input-area">
@@ -40,7 +41,7 @@ const HomePage = () => {
                 </div>
                 <div className="col-md-5 col-sm-6 p-0 subcontainers">
                     <div className="chat-section ">
-                        <div className="messages" id="messages">
+                        {/* <div className="messages" id="messages">
                             <div className="message user">Hello Bablu!</div>
                             <div className="message assistant">Namaste Bhai! Kya help chahiye?</div>
                         </div>
@@ -48,7 +49,8 @@ const HomePage = () => {
                             <input type="text" id="userInput" placeholder="Type your message..." />
                             <div className="mic"></div>
                         </div>
-                        
+                         */}
+                         <Experience/>
 
                     </div>
                     
