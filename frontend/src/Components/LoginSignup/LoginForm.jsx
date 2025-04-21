@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './LoginSignupform.css';
-import { login } from "../../firebase.js";
+import { auth } from "../../firebase.js";
 import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = ({ showLogin, setShowLogin }) => {
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,13 +22,15 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
         e.preventDefault();
 
         console.log(formData);
-
-        let status = await login(formData.email, formData.password);
-
-        if (status == null) {
+        try{
+            const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+            console.log("Successfully logged in", userCred);
+            localStorage.setItem("UserCred", JSON.stringify(userCred));
+            navigate("/dashboard");
+            
+        }catch(err){
+            console.log(err);
             alert("Login Failed! Please check your credentials.");
-        } else {            
-            Navigate("/dashboard");
         }
 
 

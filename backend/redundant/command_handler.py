@@ -1,4 +1,4 @@
-from core.state import assistant_state
+from backend.redundant.state import assistant_state
 from config.groq_api import needs_camera, send_text_only
 from .image_handler import handle_multimodal_request
 from config.playsound import text_to_speech

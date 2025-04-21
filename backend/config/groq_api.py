@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = Groq()
-prompts = json.load(open("prompts.json"))
-
 
 def needs_camera(prompt: str) -> bool:
     response = client.chat.completions.create(
@@ -24,12 +22,43 @@ def needs_camera(prompt: str) -> bool:
         text_to_speech("Opening camera...")
     return "yes" in reply
 
-def send_text_only(prompt: str,messages) -> str:
+def ready_for_interview(resume_json, job_description_json) -> bool:
+    system_prompt = f"""
+        You are an AI Interviewer conducting a professional and strict mock interview.
+        Use the resume and job description JSON data provided below to ask structured, in-depth questions.
+        Do NOT answer any questions. Only ask interview questions.
+
+        RESUME_JSON:
+        {resume_json}
+
+        JOB_DESCRIPTION_JSON:
+        {job_description_json}
+
+        Instructions:
+        1. Begin with a polite introduction and candidate self-introduction.
+        2. Then ask about education.
+        3. For each project, ask 3-4 deep technical questions.
+        4. Then ask skill-based questions using skills relevant to the job.
+        5. Never answer any questions from the user. Always remind them politely.
+
+        Start the interview now.
+        """
+    chat_messages = [
+            {"role": "system","content":system_prompt},
+            {"role": "user", "content": "Let's start the interview!"}
+        ]
+    json.dump(chat_messages, open("backend/user_history/chat_messages.json", "w"))
+    return interview_with_groq(chat_messages)
+
+
+def interview_with_groq(chat_messages) -> str:
     response = client.chat.completions.create(
-        messages=messages,
+        messages=chat_messages,
         model="meta-llama/llama-4-scout-17b-16e-instruct"
     )
     return response.choices[0].message.content.strip()
+
+
 
 def analyze_image(base64_image, prompt="What's in this image?"):
     try:
@@ -104,3 +133,5 @@ def parse_job_description(text):
     )
 
     return response.choices[0].message.content.strip()
+
+

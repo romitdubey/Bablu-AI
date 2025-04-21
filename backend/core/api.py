@@ -1,58 +1,63 @@
-from flask import Flask, send_file, jsonify
-from flask_restful import Resource, Api
-import os
-from firebase_admin import credentials, initialize_app, storage
+from flask import Flask, request
+from backend.Firebase import getStorageBucket
+from flask_cors import CORS
+from backend.core.resume_parsing import extract_text_from_pdf
+from backend.config.groq_api import parse_resume_with_groq, parse_job_description, ready_for_interview, interview_with_groq
+from backend.core.helper import update_chat_history
 
-# Initialize Flask app
+
 app = Flask(__name__)
-api = Api(app)
+CORS(app) 
 
-# Initialize Firebase
-# Get the absolute path to the FirebaseKey.json file
-current_dir = os.path.dirname(os.path.abspath(__file__))
-firebase_key_path = os.path.join(os.path.dirname(current_dir), 'FirebaseKey.json')
-cred = credentials.Certificate(firebase_key_path)
-firebase_app = initialize_app(cred, {
-    'storageBucket': 'hackathons-5f2de.appspot.com'  # Corrected bucket name format
-})
+@app.post("/startInterview")
+def startInterview():
 
-class PdfFetcher(Resource):
-    def get(self, pdf_id):
-        try:
-            # Get a reference to the Firebase Storage bucket
-            print(pdf_id)
-            bucket = storage.bucket()
-            
-            # Create a blob reference to the PDF file
-            path = f'resumes/{pdf_id}'
-            blob = bucket.blob(f'resumes/{pdf_id}')
-            print(bucket)
-            print(blob)
-            
-            if not blob.exists():
-                return {"error": "PDF not found"}, 404
-            
-            # Create a temporary file to store the PDF
-            temp_file = f'temp_{pdf_id}.pdf'
-            blob.download_to_filename(temp_file)
-            
-            # Send the file to the client
-            response = send_file(
-                temp_file,
-                mimetype='application/pdf',
-                as_attachment=True,
-                download_name=f'{pdf_id}.pdf'
-            )
-            
-            # Clean up the temporary file
-            os.remove(temp_file)
-            
-            return response
-            
-        except Exception as e:
-            return {"error": str(e)}, 500
+    try:        
 
-api.add_resource(PdfFetcher, "/pdf/<string:pdf_id>")
+        storage_bucket = getStorageBucket()
 
-if __name__ == '__main__':
+        resumeId = request.json['resumeId']
+        job_desc = request.json['jobDesc']
+        userDetails = request.json['userDetails']
+        # userId = userDetails["user"]["uid"]
+        # print(userId)
+
+        blob = storage_bucket.blob(f'resumes/{resumeId}')
+
+        blob.download_to_filename(f"backend/downloaded_resumes/{resumeId}.pdf")
+        print("Downloaded file successfully")
+        
+    
+        resumetext = extract_text_from_pdf(f"backend/downloaded_resumes/{resumeId}.pdf")
+        resume_json = parse_resume_with_groq(resumetext)
+        print(resume_json)
+        print("Parsed resume successfully")
+
+        parsed_job_desc = parse_job_description(job_desc)
+        print(parsed_job_desc)
+        print("Parsed job description successfully")
+
+        update_chat_history(False,ready_for_interview(resume_json, parsed_job_desc))
+        print("Ready for interview")
+        while True:
+            user = input("User: ")
+            chat_history = update_chat_history(True,user)
+            ai = interview_with_groq(chat_history)
+            print(ai)
+            update_chat_history(False,ai)
+            if user =="12":
+                break
+
+        return "Parsed OK!"
+    
+    except Exception as e:
+        print(e)
+        return "Error in downloading file", 500
+
+if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
