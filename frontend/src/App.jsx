@@ -9,6 +9,7 @@ import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
 
 import InterviewHomePage from './Components/Interview page/Interview-Home-Page'
 import { Experience } from './Components/Avatar/Experience'
+import TextToSpeech from './Components/Text-Speech/TextToSpeech'
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
         { path: "/signup", element: <SignupForm /> },
         { path: "/dashboard", element: <UserDashBoard /> },
         { path: "/avatar", element: <Experience /> },
-        { path: "/interview", element: <InterviewHomePage /> }
+        { path: "/interview", element: <InterviewHomePage /> },
+        { path: "/speech", element: <TextToSpeech /> }
       ]
     }]
   )
