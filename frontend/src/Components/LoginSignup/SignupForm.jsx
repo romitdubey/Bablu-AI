@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './LoginSignupform.css';
 import { auth } from "../../firebase.js"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { LoaderContext } from '../../context/loaderContext.js';
 
-const SignupForm = ({showLogin, setShowLogin}) => {
+const SignupForm = () => {
 
   const Navigate = useNavigate();
+  const Loader = useContext(LoaderContext);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -25,23 +27,27 @@ const SignupForm = ({showLogin, setShowLogin}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);    
-    
+    console.log(formData);
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    try{
+    Loader.setLoaderState(false);
+
+    try {
       const userCred = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
       console.log(userCred);
       Navigate("/login");
     }
-    catch(err){
+    catch (err) {
       console.log(err);
       alert("Signup Failed! Please check your credentials.");
     }
-    
+    finally {
+      Loader.setLoaderState(true);
+    }
 
   };
 
@@ -78,8 +84,8 @@ const SignupForm = ({showLogin, setShowLogin}) => {
             <button type="submit" className="btn btn-primary w-100">Create Account</button>
           </form>
           <p className="mt-3 text-center">
-            Already have an account? 
-            <button className="cool-btn" onClick={()=>setShowLogin(!showLogin)}>Log in</button>
+            Already have an account?
+            <button className="cool-btn" onClick={() => Navigate("/login")}>Log in</button>
           </p>
         </div>
 
