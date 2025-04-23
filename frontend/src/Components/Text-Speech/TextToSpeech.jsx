@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 function TextToSpeech() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(' hello, I m Bablu AI. Welcome to the Text to Speech demo. ');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(null);
