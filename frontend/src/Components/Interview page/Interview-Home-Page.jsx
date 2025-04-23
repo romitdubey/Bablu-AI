@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './Interview-Home-Page.css';
-// import { Experience } from '../Avatar/Experience';
+import { Experience } from '../Avatar/Experience';
 const HomePage = () => {
     const [isCameraOn, setIsCameraOn] = useState(false);
     const videoRef = useRef(null);
@@ -51,7 +51,7 @@ const HomePage = () => {
                             <div className="mic"></div>
                         </div>
                          */}
-                         {/* <Experience/> */}
+                         <Experience/>
 
                     </div>
                     

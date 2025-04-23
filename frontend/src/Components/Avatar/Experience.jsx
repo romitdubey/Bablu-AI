@@ -1,7 +1,8 @@
 import { Environment, OrbitControls, useTexture } from "@react-three/drei";
-// import { Avatar } from "./Avatar";
+
 import { Canvas, useThree } from "@react-three/fiber";
-import { AvatarEdit } from "./AvatarEdit";
+import Avatar from "./Avatar";
+// import { AvatarEdit } from "./AvatarEdit";
 
 export const Experience = () => {
   function BackgroundPlane() {
@@ -25,10 +26,10 @@ export const Experience = () => {
         <group>
           
           
-          {/* <Avatar position={[0, -1.4, 3]} scale={2} /> */}
+          <Avatar position={[0, -1.4, 3]} scale={2} />
           
           
-          <AvatarEdit position={[0, -1.4, 3]} scale={2} />
+          {/* <AvatarEdit position={[0, -1.4, 3]} scale={2} /> */}
           {/* for chair box */}
           <mesh scale={[1.5, 1.1, 0.8]} position-y={-1} position-z={3}>
             <boxGeometry />
