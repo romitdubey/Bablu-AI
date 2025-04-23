@@ -36,9 +36,10 @@ def startInterview():
         parsed_job_desc = parse_job_description(job_desc)
         print(parsed_job_desc)
         print("Parsed job description successfully")
-
-        update_chat_history(False,ready_for_interview(resume_json, parsed_job_desc))
+        chat_history = ready_for_interview(resume_json, parsed_job_desc)
+        update_chat_history(True,chat_history)
         print("Ready for interview")
+        print(chat_history)
         while True:
             user = input("User: ")
             chat_history = update_chat_history(True,user)

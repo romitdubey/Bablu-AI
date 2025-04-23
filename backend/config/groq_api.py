@@ -22,7 +22,7 @@ def needs_camera(prompt: str) -> bool:
         text_to_speech("Opening camera...")
     return "yes" in reply
 
-def ready_for_interview(resume_json, job_description_json) -> bool:
+def ready_for_interview(resume_json, job_description_json) -> str:
     system_prompt = f"""
         You are an AI Interviewer conducting a professional and strict mock interview.
         Use the resume and job description JSON data provided below to ask structured, in-depth questions.
@@ -36,19 +36,21 @@ def ready_for_interview(resume_json, job_description_json) -> bool:
 
         Instructions:
         1. Begin with a polite introduction and candidate self-introduction.
-        2. Then ask about education.
+        2. Then ask about education, ask 2-3 questions.
         3. For each project, ask 3-4 deep technical questions.
         4. Then ask skill-based questions using skills relevant to the job.
         5. Never answer any questions from the user. Always remind them politely.
-
-        Start the interview now.
+        6. Ask 1 question in a time, don't ask multiple questions at once.
+        7. dont add multiple questions in a single response.
+        Start the interview now. with a polite introduction and self-introduction.
         """
     chat_messages = [
             {"role": "system","content":system_prompt},
             {"role": "user", "content": "Let's start the interview!"}
         ]
     json.dump(chat_messages, open("backend/user_history/chat_messages.json", "w"))
-    return interview_with_groq(chat_messages)
+    text = interview_with_groq(chat_messages)
+    return text
 
 
 def interview_with_groq(chat_messages) -> str:
@@ -56,7 +58,7 @@ def interview_with_groq(chat_messages) -> str:
         messages=chat_messages,
         model="meta-llama/llama-4-scout-17b-16e-instruct"
     )
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message.content.strip().replace("**","")
 
 
 
