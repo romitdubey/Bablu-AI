@@ -1,10 +1,58 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect, use } from 'react'
 import './Interview-Home-Page.css';
 import { Experience } from '../Avatar/Experience';
 const HomePage = () => {
     const [isCameraOn, setIsCameraOn] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
+
+    /*TEXT TO SPEECH START */
+      const [text, setText] = useState("hello, I m AI Interviewer. Welcome to the Text s to Speech demo. I am your personal AI ineterview. Please listen carefully.");
+      function speek(){
+          const value = new SpeechSynthesisUtterance(text);
+          window.speechSynthesis.speak(value);
+        }
+        useEffect(() => {  speek() },[])
+    //   const [voices, setVoices] = useState([]);
+    //   const [selectedVoice, setSelectedVoice] = useState(null);
+    
+    //   // Load voices and set Hindi voice
+    //   useEffect(() => {
+    //     const loadVoices = () => {
+    //       const availableVoices = speechSynthesis.getVoices();
+    //       const hindiVoices = availableVoices.filter(voice => voice.lang.includes('hi') || voice.name.includes('हिन्दी'));
+    
+    //       if (hindiVoices.length > 0) {
+    //         setVoices(hindiVoices);
+    //         setSelectedVoice(hindiVoices[0]);
+    //       }
+    //     };
+    
+    //     if (speechSynthesis.getVoices().length !== 0) {
+    //       loadVoices();
+    //     } else {
+    //       speechSynthesis.onvoiceschanged = loadVoices;
+    //     }
+    
+    //     return () => {
+    //       speechSynthesis.onvoiceschanged = null;
+    //     };
+    //   }, []);
+    
+    //   // Speak the text when voice is loaded
+    //   useEffect(() => {
+    //     if (selectedVoice && text) {
+    //       const utterance = new SpeechSynthesisUtterance(text);
+    //       utterance.voice = selectedVoice;
+    //       speechSynthesis.speak(utterance);
+    //     }
+    //   }, [selectedVoice, text]);
+
+    
+    /*TEXT TO SPEECH END */
+    
+
+
     const startCamera = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });

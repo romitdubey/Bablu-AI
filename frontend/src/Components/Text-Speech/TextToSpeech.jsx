@@ -1,80 +1,53 @@
-// import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-// function TextToSpeech() {
-//   const [text, setText] = useState(' hello, I m Bablu AI. Welcome to the Text to Speech demo. ');
-//   const [isSpeaking, setIsSpeaking] = useState(false);
-//   const [voices, setVoices] = useState([]);
-//   const [selectedVoice, setSelectedVoice] = useState(null);
+const TextToSpeech = () => {
+  const [text, setText] = useState("hello, I m AI Interviewer. Welcome to the Text s to Speech demo. I can read this text for you in Hindi. Please listen carefully.");
+  const [voices, setVoices] = useState([]);
+  const [selectedVoice, setSelectedVoice] = useState(null);
 
-//   useEffect(() => {
-//     const loadVoices = () => {
-//       const availableVoices = speechSynthesis.getVoices();
-//       // Filter voices to include only "Google हिन्दी"
-//       const hindiVoices = availableVoices.filter((voice) =>
-//         voice.name.includes('Google हिन्दी')
-//       );
-//       setVoices(hindiVoices);
-//       if (hindiVoices.length > 0) {
-//         setSelectedVoice(hindiVoices[0].name); // Default to the first Hindi voice
-//       }
-//     };
+  // Load voices and set Hindi voice
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = speechSynthesis.getVoices();
+      const hindiVoices = availableVoices.filter(voice => voice.lang.includes('hi') || voice.name.includes('हिन्दी'));
 
-//     loadVoices();
-//     speechSynthesis.onvoiceschanged = loadVoices; // Ensure voices are loaded in all browsers
-//   }, []);
+      if (hindiVoices.length > 0) {
+        setVoices(hindiVoices);
+        setSelectedVoice(hindiVoices[0]);
+      }
+    };
 
-//   const handleSpeak = () => {
-//     if (text) {
-//       const utterance = new SpeechSynthesisUtterance(text);
-//       const voice = voices.find((v) => v.name === selectedVoice);
-//       if (voice) {
-//         utterance.voice = voice;
-//       }
-//       speechSynthesis.speak(utterance);
-//       setIsSpeaking(true);
+    if (speechSynthesis.getVoices().length !== 0) {
+      loadVoices();
+    } else {
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
 
-//       utterance.onend = () => {
-//         setIsSpeaking(false);
-//       };
+    return () => {
+      speechSynthesis.onvoiceschanged = null;
+    };
+  }, []);
 
-//       utterance.onerror = () => {
-//         setIsSpeaking(false);
-//       };
-//     }
-//   };
+  // Speak the text when voice is loaded
+  useEffect(() => {
+    if (selectedVoice && text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.voice = selectedVoice;
+      speechSynthesis.speak(utterance);
+    }
+  }, [selectedVoice, text]);
 
-//   const handleStop = () => {
-//     speechSynthesis.cancel();
-//     setIsSpeaking(false);
-//   };
+  return (
+    <div>
+      <h2>Text to Speech</h2>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={4}
+        cols={50}
+      />
+    </div>
+  );
+};
 
-//   return (
-//     <div>
-//       <textarea
-//         rows="4"
-//         cols="50"
-//         value={text}
-//         onChange={(e) => setText(e.target.value)}
-//         placeholder="Enter text to speak"
-//       />
-//       {/* <select
-//         value={selectedVoice}
-//         onChange={(e) => setSelectedVoice(e.target.value)}
-//       >
-//         {voices.map((voice) => (
-//           <option key={voice.name} value={voice.name}>
-//             {voice.name} ({voice.lang})
-//           </option>
-//         ))}
-//       </select> */}
-//       <button onClick={handleSpeak} disabled={isSpeaking}>
-//         {isSpeaking ? 'Speaking...' : 'Speak'}
-//       </button>
-//       <button onClick={handleStop} disabled={!isSpeaking}>
-//         Stop
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default TextToSpeech;
+export default TextToSpeech;
