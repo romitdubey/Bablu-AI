@@ -1,66 +1,82 @@
-// import React, { useEffect, useRef } from 'react';
-// import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import React, { useEffect, useRef, useState } from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-// const Dictaphone = () => {
-//   const {
-//     transcript,
-//     listening,
-//     resetTranscript,
-//     browserSupportsSpeechRecognition
-//   } = useSpeechRecognition();
+const Dictaphone = () => {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
 
-//   const inactivityTimer = useRef(null);
+  const inactivityTimer = useRef(null);
+  const [hasSpoken, setHasSpoken] = useState(false);
+  const previousTranscriptLength = useRef(0);
 
-//   if (!browserSupportsSpeechRecognition) {
-//     return <span>Browser doesn't support speech recognition.</span>;
-//   }
+  // Stop mic after 5s of no activity
+  const startInactivityTimer = () => {
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
 
-//   const startListeningWithInactivityTimer = () => {
-//     SpeechRecognition.startListening();
-//     console.log('Started listening');
+    inactivityTimer.current = setTimeout(() => {
+      SpeechRecognition.stopListening();
+      console.log('Mic stopped due to 5s of inactivity');
+    }, 5000);
+  };
 
-//     // Clear any existing timer
-//     if (inactivityTimer.current) {
-//       clearTimeout(inactivityTimer.current);
-//     }
-// console.log(inactivityTimer.current)
-//     // Start a new inactivity timer
-//     inactivityTimer.current = setTimeout(() => {
-//       SpeechRecognition.stopListening();
-//       console.log('Stopped listening due to inactivity');
-//     }, 5000); // 5000ms = 5 seconds
-//   };
+  // Start listening + initialize everything
+  const startListeningWithInactivityTimer = () => {
+    resetTranscript();
+    setHasSpoken(false);
+    previousTranscriptLength.current = 0;
 
-//   useEffect(() => {
-//     // Reset the inactivity timer whenever the transcript changes
-//     if (listening) {
-//       if (inactivityTimer.current) {
-//         clearTimeout(inactivityTimer.current);
-//       }
+    SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
+    console.log('Mic started');
 
-//       inactivityTimer.current = setTimeout(() => {
-//         SpeechRecognition.stopListening();
-//         console.log('Stopped listening due to inactivity');
-//       }, 10000); // 5000ms = 5 seconds
-//     }
+    // Start inactivity timer immediately (in case user stays silent)
+    startInactivityTimer();
+  };
 
-//     return () => {
-//       if (inactivityTimer.current) {
-//         clearTimeout(inactivityTimer.current);
-//       }
-//     };
-//   }, [transcript, listening]);
+  // Watch for transcript updates
+  useEffect(() => {
+    if (!listening) return;
 
-//   return (
-//     <div>
-//       <p>Microphone: {listening ? 'on' : 'off'}</p>
-//       <button onClick={startListeningWithInactivityTimer}>Start with Inactivity Timer</button>
-//       <button onClick={SpeechRecognition.startListening}>Start</button>
-//       <button onClick={SpeechRecognition.stopListening}>Stop</button>
-//       <button onClick={resetTranscript}>Reset</button>
-//       <p>{transcript}</p>
-//     </div>
-//   );
-// };
+    if (transcript.length > previousTranscriptLength.current) {
+      previousTranscriptLength.current = transcript.length;
 
-// export default Dictaphone;
+      if (!hasSpoken) {
+        setHasSpoken(true);
+      }
+
+      // Reset inactivity timer on new speech
+      console.log('Speech detected, resetting inactivity timer');
+      startInactivityTimer();
+    }
+
+    return () => {
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+    };
+  }, [transcript, listening]);
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Your browser doesn't support speech recognition.</span>;
+  }
+
+  return (
+    <div>
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      <button onClick={startListeningWithInactivityTimer}>Start</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <button onClick={resetTranscript}>Reset</button>
+      <p><strong>Transcript:</strong></p>
+      <p style={{ minHeight: "100px", border: "1px solid #ccc", padding: "10px" }}>{transcript}</p>
+      {listening && <p>Waiting for voice input…</p>}
+      {listening && <p>Mic will auto-stop after 5s of silence</p>}
+    </div>
+  );
+};
+
+export default Dictaphone;
