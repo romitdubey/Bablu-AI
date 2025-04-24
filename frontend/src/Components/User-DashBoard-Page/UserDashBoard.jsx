@@ -6,12 +6,13 @@ import { storage, auth } from "../../firebase"
 import { uploadBytes, ref } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
 import './UserDashBoard.css'
-import { LoaderContext } from '../../Context';
+import { LoaderContext, UserContext } from '../../Context';
 import axios from 'axios'
 
 const UserDashBoard = () => {
     const Navigate = useNavigate();
     const Loader = useContext(LoaderContext);
+    const currentUser = useContext(UserContext);
     const [userNavWidth, setUserNavWidth] = useState(false);
     const dashBoardSlider = () => {
         if (userNavWidth == true) {
@@ -47,35 +48,22 @@ const UserDashBoard = () => {
         Loader.setLoaderState(false);
 
         try {
-            // const resumeRef = ref(storage, 'resumes/userId');
-            // const snapshot = await uploadBytes(resumeRef, resumeFile)
-            // console.log("Success!")
-            // console.log(snapshot);
+            const resumeRef = ref(storage, 'resumes/userId');
+            const snapshot = await uploadBytes(resumeRef, resumeFile)
+            console.log("Success!")
+            console.log(snapshot);
 
 
-            // fetch("http://127.0.0.1:5000/startInterview", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify({
-            //         resumeId: "userId",
-            //         jobDesc: jd,
-            //         userId: localStorage.getItem('userEmail'),
-            //         userEmail: localStorage.getItem('userId')
-            //     }),
-            // })
-
-            let response= await axios.post("http://127.0.0.1:5000/startInterview", {
+            let response = await axios.post("http://127.0.0.1:5000/startInterview", {
                 resumeId: "userId",
                 jobDesc: jd,
                 userId: localStorage.getItem('userEmail'),
                 userEmail: localStorage.getItem('userId')
             })
 
-            console.log(response.data);
+            localStorage.setItem("chat", response.data.chat)
 
-            // Navigate("/interview");
+            Navigate("/interview");
         }
         catch (err) {
             console.log("Oops, some error occured.");
@@ -89,6 +77,11 @@ const UserDashBoard = () => {
 
     async function logout() {
         try {
+            currentUser.setUser({
+                email: null,
+                id: null,
+                loggedIn: false
+            });
             await auth.signOut();
             console.log("Logged out successfully")
             localStorage.removeItem("UserCred");
@@ -99,14 +92,10 @@ const UserDashBoard = () => {
             console.log(err);
         }
     }
-
-    
-    // DELETE USER DATA FROM LOCAL STORAGE AFTER 2 SEC
-    // setTimeout(() => {
-    //     console.log("data deleted")
-    //     localStorage.removeItem("UserCred");
-    // }, 2000);
-    
+    const userLogout = () => {
+        // localStorage.removeItem("userData");
+        Navigate("/login");
+    }
 
     return (
         <section className="user-dashbord">

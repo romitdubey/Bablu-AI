@@ -24,7 +24,7 @@ def needs_camera(prompt: str) -> bool:
 
 def ready_for_interview(resume_json, job_description_json) -> str:
     system_prompt = f"""
-        You are an AI Interviewer conducting a professional and strict mock interview.
+        You are an AI Interviewer whose name is "Jhonny Sharma" conducting a professional and strict mock interview.
         Use the resume and job description JSON data provided below to ask structured, in-depth questions.
         Do NOT answer any questions. Only ask interview questions.
 
@@ -42,6 +42,7 @@ def ready_for_interview(resume_json, job_description_json) -> str:
         5. Never answer any questions from the user. Always remind them politely.
         6. Ask 1 question in a time, don't ask multiple questions at once.
         7. dont add multiple questions in a single response.
+        8. act like a real interviewer, be strict and professional.
         Start the interview now. with a polite introduction and self-introduction.
         """
     chat_messages = [

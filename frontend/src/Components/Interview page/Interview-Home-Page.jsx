@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, use } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import './Interview-Home-Page.css';
 import { Experience } from '../Avatar/Experience';
 const HomePage = () => {
@@ -72,6 +72,10 @@ const HomePage = () => {
             setIsCameraOn(false);
         }
     }
+
+    useEffect(()=>{
+        console.log(localStorage.getItem("chat"));
+    }, [])
 
     return (
         <section className="homePage-section">

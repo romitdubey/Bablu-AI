@@ -8,21 +8,24 @@ import { LoaderContext, UserContext } from '../Context';
 const AppLayout = () => {
 
   const [loaderState, setLoaderState] = useState(true);
-  const [userDetails, setUserDetails] = useState({
-    userId: null,
-    userName: null,
-    userLoggedIn: null,
-    userRole: null,
+  const [user, setUser] = useState({
+    email: null,
+    id: null,
+    loggedIn: false
   });
+
 
   return (
     <>
       <LoaderContext.Provider value={{ loaderState, setLoaderState }}>
         <Loader />
-        <Header />
-        <main>
-          <Outlet />
-        </main>
+          <UserContext.Provider value={{ user, setUser }}>
+            
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          </UserContext.Provider>
       </LoaderContext.Provider>
     </>
   );
