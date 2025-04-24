@@ -24,6 +24,7 @@ const HomePage = () => {
             setIsCameraOn(false);
         }
     }
+
     return (
         <section className="homePage-section">
             <div className="row my-row">

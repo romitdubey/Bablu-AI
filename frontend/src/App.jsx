@@ -6,11 +6,9 @@ import AppLayout from './Layout/AppLayout'
 import LoginForm from './Components/LoginSignup/LoginForm'
 import SignupForm from './Components/LoginSignup/SignupForm'
 import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
-
 import InterviewHomePage from './Components/Interview page/Interview-Home-Page'
-import { Experience } from './Components/Avatar/Experience'
-import TextToSpeech from './Components/Text-Speech/TextToSpeech'
-import Dictaphone from './Components/Text-Speech/Dictaphone'
+// import TextToSpeech from './Components/Text-Speech/TextToSpeech'
+// import Dictaphone from './Components/Text-Speech/Dictaphone'
 
 const router = createBrowserRouter([
   {
@@ -22,10 +20,9 @@ const router = createBrowserRouter([
         { path: "/login", element: <LoginForm /> },
         { path: "/signup", element: <SignupForm /> },
         { path: "/dashboard", element: <UserDashBoard /> },
-        { path: "/avatar", element: <Experience /> },
         { path: "/interview", element: <InterviewHomePage /> },
-        { path: "/speech", element: <TextToSpeech /> },
-        { path: "/text", element: <Dictaphone /> }
+        // { path: "/speech", element: <TextToSpeech /> },
+        // { path: "/text", element: <Dictaphone /> }
       ]
     }]
   )

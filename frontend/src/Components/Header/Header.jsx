@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link } from 'react-router-dom';
 import "./Header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { LoaderContext } from '../../context/loaderContext';
+
 
 const Header = () => {
+    const Loader = useContext(LoaderContext);
     return (
         <nav className="navbar navbar-expand-md background-color">
             <div className="container-fluid">
@@ -25,11 +28,12 @@ const Header = () => {
                         <li className="nav-item">
                             {/* <Link className="nav-link text-color" aria-current="page" to="/dashboard">Dashboard</Link> */}
                         </li>
+
                         <li className="nav-item">
-                            <Link className="nav-link text-color" to='/login'>Login</Link>
+                            <Link className="nav-link text-color" to='/login' >Login</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-color" to="/signup">Signup</Link>
+                            <Link className="nav-link text-color" to="/signup" >Signup</Link>
                         </li>
                     </ul>
                 </div>

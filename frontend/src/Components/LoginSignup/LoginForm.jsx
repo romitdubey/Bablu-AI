@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './LoginSignupform.css';
 import { auth } from "../../firebase.js";
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { LoaderContext } from '../../context/loaderContext.js';
 
-const LoginForm = ({ showLogin, setShowLogin }) => {
+const LoginForm = () => {
     const navigate = useNavigate();
+    const Loader = useContext(LoaderContext);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -23,6 +25,7 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
 
         console.log(formData);
         try{
+            Loader.setLoaderState(false);
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("Successfully logged in", userCred);
             localStorage.setItem("UserCred", JSON.stringify(userCred));
@@ -31,10 +34,14 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
         }catch(err){
             console.log(err);
             alert("Login Failed! Please check your credentials.");
+        }finally{
+            Loader.setLoaderState(true);
         }
-
-
     };
+
+    // useEffect(() => {
+    //     Loader.setLoaderState(true);
+    // });
 
     return (<>
 
@@ -56,7 +63,7 @@ const LoginForm = ({ showLogin, setShowLogin }) => {
                     </form>
                     <p className="mt-3 text-center">
                         Don't have an account?
-                        <button className="cool-btn" onClick={() => setShowLogin(!showLogin)}>Sign Up</button>
+                        <button className="cool-btn">Sign Up</button>
                     </p>
                 </div>
 

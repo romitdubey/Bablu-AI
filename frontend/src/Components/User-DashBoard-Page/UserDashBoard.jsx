@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaChevronLeft } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { BiArrowFromLeft } from "react-icons/bi";
@@ -6,10 +6,12 @@ import { storage, auth } from "../../firebase"
 import { uploadBytes, ref } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
 import './UserDashBoard.css'
+import { LoaderContext } from '../../context/LoaderContext';
 // import { useNavigate } from 'react-router-dom';
 
 const UserDashBoard = () => {
     const Navigate = useNavigate();
+    const Loader = useContext(LoaderContext);
     const [userNavWidth, setUserNavWidth] = useState(false);
     const dashBoardSlider = () => {
         if (userNavWidth == true) {
@@ -24,6 +26,7 @@ const UserDashBoard = () => {
     const [jd, setJd] = useState("");
 
     async function startUpload() {
+
         if (jd == "") {
             alert("Please enter a job description.");
             return;
@@ -39,7 +42,9 @@ const UserDashBoard = () => {
         if (resumeFile.type !== "application/pdf") {
             alert("Please upload a PDF file.");
             return;
-        }        
+        }       
+        
+        Loader.setLoaderState(false);
 
         try {
             const resumeRef = ref(storage, 'resumes/userId');
@@ -66,6 +71,9 @@ const UserDashBoard = () => {
             console.error(err);
             alert("Upload Failed! Please try again.");
         }
+        finally {
+            Loader.setLoaderState(true);
+        }
     }
 
     async function logout() {
@@ -83,6 +91,7 @@ const UserDashBoard = () => {
         // localStorage.removeItem("userData");
         Navigate("/login");
     }
+
     return (
         <section className="user-dashbord">
             <div className=''>
