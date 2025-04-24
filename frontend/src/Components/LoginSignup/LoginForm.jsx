@@ -3,7 +3,7 @@ import './LoginSignupform.css';
 import { auth } from "../../firebase.js";
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { LoaderContext } from '../../context/loaderContext.js';
+import { LoaderContext } from '../../Context.js';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -28,7 +28,9 @@ const LoginForm = () => {
             Loader.setLoaderState(false);
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("Successfully logged in", userCred);
-            localStorage.setItem("UserCred", JSON.stringify(userCred));
+
+            localStorage.setItem("userEmail", userCred.user.email);
+            localStorage.setItem("userId", userCred.user.uid);
             navigate("/dashboard");
             
         }catch(err){

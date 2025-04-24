@@ -48,7 +48,7 @@ def ready_for_interview(resume_json, job_description_json) -> str:
             {"role": "system","content":system_prompt},
             {"role": "user", "content": "Let's start the interview!"}
         ]
-    json.dump(chat_messages, open("backend/user_history/chat_messages.json", "w"))
+    json.dump(chat_messages, open("../user_history/chat_messages.json", "w"))
     text = interview_with_groq(chat_messages)
     return text
 
