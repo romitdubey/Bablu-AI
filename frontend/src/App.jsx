@@ -7,7 +7,7 @@ import LoginForm from './Components/LoginSignup/LoginForm'
 import SignupForm from './Components/LoginSignup/SignupForm'
 import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
 import InterviewHomePage from './Components/Interview page/Interview-Home-Page'
-// import TextToSpeech from './Components/Text-Speech/TextToSpeech'
+import TextToSpeech from './Components/Text-Speech/TextToSpeech'
 // import Dictaphone from './Components/Text-Speech/Dictaphone'
 
 //  hwello world
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         { path: "/signup", element: <SignupForm /> },
         { path: "/dashboard", element: <UserDashBoard /> },
         { path: "/interview", element: <InterviewHomePage /> },
-        // { path: "/speech", element: <TextToSpeech /> },
+        { path: "/speech", element: <TextToSpeech /> },
         // { path: "/text", element: <Dictaphone /> }
       ]
     }]
