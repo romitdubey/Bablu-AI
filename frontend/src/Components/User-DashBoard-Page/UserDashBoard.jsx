@@ -80,17 +80,22 @@ const UserDashBoard = () => {
         try {
             await auth.signOut();
             console.log("Logged out successfully")
-
-            navigate("/");
+            localStorage.removeItem("UserCred");
+            Navigate("/");
+           
         }
         catch (err) {
             console.log(err);
         }
     }
-    const  userLogout = () => {
-        // localStorage.removeItem("userData");
-        Navigate("/login");
-    }
+
+    
+    // DELETE USER DATA FROM LOCAL STORAGE AFTER 2 SEC
+    // setTimeout(() => {
+    //     console.log("data deleted")
+    //     localStorage.removeItem("UserCred");
+    // }, 2000);
+    
 
     return (
         <section className="user-dashbord">
@@ -122,7 +127,7 @@ const UserDashBoard = () => {
                                         <BiArrowFromLeft className='fs-5 m-2' />
                                         <h6>demo1</h6>
                                     </div>
-                                    <button className='btn btn-danger'>Logout</button>
+                                    <button className='btn btn-danger' onClick={logout}>Logout</button>
                                 </div>
                             </div>
                             : <div onClick={dashBoardSlider}>
