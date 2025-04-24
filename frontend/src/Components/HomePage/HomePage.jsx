@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import "./HomePage.css"
 import { FaAirbnb } from 'react-icons/fa'
 

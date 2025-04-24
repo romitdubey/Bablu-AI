@@ -1,6 +1,6 @@
 
 import React, { useContext } from 'react'
-import { LoaderContext } from '../../context/loaderContext'
+import { LoaderContext } from '../../Context'
 import './loader.css'
 
 export default function loader() {

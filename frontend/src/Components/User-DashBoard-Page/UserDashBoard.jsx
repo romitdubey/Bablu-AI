@@ -6,8 +6,8 @@ import { storage, auth } from "../../firebase"
 import { uploadBytes, ref } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
 import './UserDashBoard.css'
-import { LoaderContext } from '../../context/LoaderContext';
-// import { useNavigate } from 'react-router-dom';
+import { LoaderContext } from '../../Context';
+import axios from 'axios'
 
 const UserDashBoard = () => {
     const Navigate = useNavigate();
@@ -42,29 +42,40 @@ const UserDashBoard = () => {
         if (resumeFile.type !== "application/pdf") {
             alert("Please upload a PDF file.");
             return;
-        }       
-        
+        }
+
         Loader.setLoaderState(false);
 
         try {
-            const resumeRef = ref(storage, 'resumes/userId');
-            const snapshot = await uploadBytes(resumeRef, resumeFile)
-            console.log("Success!")
-            console.log(snapshot);
+            // const resumeRef = ref(storage, 'resumes/userId');
+            // const snapshot = await uploadBytes(resumeRef, resumeFile)
+            // console.log("Success!")
+            // console.log(snapshot);
 
-            fetch("http://127.0.0.1:5000/startInterview", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    resumeId: "userId",
-                    jobDesc: jd,
-                    userDetails: localStorage.getItem("UserCred")
-                }),
+
+            // fetch("http://127.0.0.1:5000/startInterview", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify({
+            //         resumeId: "userId",
+            //         jobDesc: jd,
+            //         userId: localStorage.getItem('userEmail'),
+            //         userEmail: localStorage.getItem('userId')
+            //     }),
+            // })
+
+            let response= await axios.post("http://127.0.0.1:5000/startInterview", {
+                resumeId: "userId",
+                jobDesc: jd,
+                userId: localStorage.getItem('userEmail'),
+                userEmail: localStorage.getItem('userId')
             })
 
-            Navigate("/interview");
+            console.log(response.data);
+
+            // Navigate("/interview");
         }
         catch (err) {
             console.log("Oops, some error occured.");
@@ -87,7 +98,7 @@ const UserDashBoard = () => {
             console.log(err);
         }
     }
-    const  userLogout = () => {
+    const userLogout = () => {
         // localStorage.removeItem("userData");
         Navigate("/login");
     }

@@ -3,7 +3,7 @@ import './LoginSignupform.css';
 import { auth } from "../../firebase.js"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { LoaderContext } from '../../context/loaderContext.js';
+import { LoaderContext } from '../../Context.js';
 
 const SignupForm = () => {
 

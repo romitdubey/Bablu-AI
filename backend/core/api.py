@@ -20,10 +20,11 @@ def startInterview():
 
         resumeId = request.json['resumeId']
         job_desc = request.json['jobDesc']
-        userDetails = request.json['userDetails']
-        print(userDetails)
-        print(job_desc)
-        print(resumeId)
+        userId = request.json['userId']
+        userEmail = request.json['userEmail']
+
+        print(request.json)
+        
         blob = storage_bucket.blob(f'resumes/{resumeId}')
         print("Blob created successfully")
         blob.download_to_filename(f"../downloaded_resumes/{resumeId}.pdf")
@@ -41,7 +42,10 @@ def startInterview():
         print("Ready for interview")
         print(chat_history)
 
-        return jsonify({"message": "Interview started successfully!"})
+        return jsonify({
+            "message": "Interview started successfully!", 
+            "chat": chat_history
+            })
 
     except Exception as e:
         print(e)

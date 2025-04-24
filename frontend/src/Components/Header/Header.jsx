@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { Link } from 'react-router-dom';
 import "./Header.css";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { LoaderContext } from '../../context/loaderContext';
+import { LoaderContext } from '../../Context';
 
 
 const Header = () => {
