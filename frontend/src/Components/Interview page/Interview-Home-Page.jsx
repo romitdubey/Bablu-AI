@@ -73,9 +73,7 @@ const HomePage = () => {
         }
     }
 
-    useEffect(()=>{
-        console.log(localStorage.getItem("chat"));
-    }, [])
+    
 
     return (
         <section className="homePage-section">
