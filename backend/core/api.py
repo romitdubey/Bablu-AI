@@ -59,21 +59,34 @@ def chat():
         if not user_input:
             return jsonify({"error": "Text is required"}), 400
 
+<<<<<<< HEAD
         chat_history = update_chat_history(True, user_input)  # user message
         print("Chat history updated")
         ai_response = interview_with_groq(chat_history)
         print("AI response received")
         update_chat_history(False, ai_response)  # AI reply
         print(ai_response)
+=======
+        chat_history = update_chat_history(True, user_input) 
+        ai_response = interview_with_groq(chat_history)
+        update_chat_history(False, ai_response)
+
+>>>>>>> 02b827795a8b921ad4688c1673535bc282823e4b
         return jsonify({
             "reply": ai_response,
-            "chat_history": chat_history
         })
-
     except Exception as e:
         print(e)
         return jsonify({"error": "Something went wrong"}), 500
-
+@app.get("/chatHistory")
+def get_chat_history():
+    try:
+        chat_messages = json.load(open("../user_history/chat_messages.json"))
+        return jsonify({
+            "chat_history": chat_messages
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
