@@ -61,17 +61,25 @@ def chat():
 
         chat_history = update_chat_history(True, user_input)  # user message
         ai_response = interview_with_groq(chat_history)
-        update_chat_history(False, ai_response)  # AI reply
-
+        update_chat_history(False, ai_response)
+        chat_history = json.load(open("../user_history/chat_messages.json"))
+        latest_chat_history = chat_history[-2:]  # AI reply
         return jsonify({
             "reply": ai_response,
-            "chat_history": chat_history
+            "chat_history": latest_chat_history
         })
-
     except Exception as e:
         print(e)
         return jsonify({"error": "Something went wrong"}), 500
-
+@app.get("/chatHistory")
+def get_chat_history():
+    try:
+        chat_messages = json.load(open("../user_history/chat_messages.json"))
+        return jsonify({
+            "chat_history": chat_messages
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
