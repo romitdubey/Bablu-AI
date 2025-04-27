@@ -35,7 +35,7 @@ export default function Avatar(props) {
     smoothMorphTarget: true,
     morphTargetSmoothing: 0.5,
     script: {
-      value: 'Hello! Welcome to our 3D avatar demo. Subham bhosdi wala, gandu',
+      value: localStorage.getItem('chat'),
     },
   });
 
@@ -45,15 +45,37 @@ export default function Avatar(props) {
 
   useEffect(() => {
     if (playAudio) {
-      const utterance = new SpeechSynthesisUtterance(script);
-      utterance.rate = 0.9; // Slower speech rate
-      utterance.pitch = 1; // Normal pitch
-      utteranceRef.current = utterance;
-
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-
-      speechSynthesis.speak(utterance);
+      const synth = window.speechSynthesis;
+  
+      const speak = () => {
+        const voices = synth.getVoices();
+        const hindiVoice = voices.find(
+          (voice) =>
+            voice.lang.toLowerCase().includes('hi') ||
+            voice.name.includes('हिन्दी')
+        );
+  
+        const utterance = new SpeechSynthesisUtterance(script);
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        if (hindiVoice) {
+          utterance.voice = hindiVoice;
+        }
+  
+        utteranceRef.current = utterance;
+  
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+  
+        synth.speak(utterance);
+      };
+  
+      // Sometimes voices are not immediately loaded
+      if (synth.getVoices().length === 0) {
+        synth.onvoiceschanged = speak;
+      } else {
+        speak();
+      }
     } else {
       if (utteranceRef.current) {
         speechSynthesis.cancel();
@@ -61,6 +83,7 @@ export default function Avatar(props) {
       }
     }
   }, [playAudio, script]);
+  
 
   // Viseme animation logic
   const lastVisemeTime = useRef(0);
