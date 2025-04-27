@@ -60,9 +60,11 @@ def chat():
             return jsonify({"error": "Text is required"}), 400
 
         chat_history = update_chat_history(True, user_input)  # user message
+        print("Chat history updated")
         ai_response = interview_with_groq(chat_history)
+        print("AI response received")
         update_chat_history(False, ai_response)  # AI reply
-
+        print(ai_response)
         return jsonify({
             "reply": ai_response,
             "chat_history": chat_history
