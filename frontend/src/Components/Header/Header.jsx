@@ -15,6 +15,7 @@ const Header = () => {
 
     async function logout() {
         try {
+            localStorage.removeItem("uid");
             currentUser.setUser({
                 email: null,
                 id: null,
@@ -22,8 +23,8 @@ const Header = () => {
             });
             await auth.signOut();
             console.log("Logged out successfully")
-
             Navigate("/");
+
         }
         catch (err) {
             console.log(err);
@@ -55,10 +56,10 @@ const Header = () => {
 
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <span className="nav-link text-color" style={{textDecoration: "None", cursor: "default"}} >{currentUser.user.name}</span>
+                                <span className="nav-link text-color" style={{ textDecoration: "None", cursor: "default" }} >{currentUser.user.name}</span>
                             </li>
                             <li className="nav-item">
-                                <img src="/user.png" alt="user-graphic" style={{"width": "3vw"}}/>
+                                <img src="/user.png" alt="user-graphic" style={{ "width": "3vw" }} />
                             </li>
                         </ul>
 
