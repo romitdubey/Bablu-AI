@@ -6,12 +6,12 @@ const RouterProtection = (props) => {
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const Navigate = useNavigate();
     useEffect(() => {
-        let x = JSON.parse(localStorage.getItem("UserCred"));
+        let userUid = JSON.parse(localStorage.getItem("uId"));
         
-        if (x == null) {
+        if (userUid == null) {
             Navigate("/login")
         } else {
-            console.log("User is logged in", x.user.uid)
+            console.log("User is logged in", userUid.user.uid)
         }
         
     }, [])
