@@ -24,7 +24,6 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData);
         try{
             Loader.setLoaderState(false);
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
@@ -49,6 +48,7 @@ const LoginForm = () => {
         }finally{
             Loader.setLoaderState(true);
         }
+        console.log("login formData",currentUser.user.uid);
     };
 
     return (<>

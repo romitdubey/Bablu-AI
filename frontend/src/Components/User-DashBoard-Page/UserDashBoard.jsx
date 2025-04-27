@@ -84,6 +84,7 @@ const UserDashBoard = () => {
             });
             await auth.signOut();
             console.log("Logged out successfully")
+            localStorage.removeItem("uId");
             Navigate("/");
 
         }

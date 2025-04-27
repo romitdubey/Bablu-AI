@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const RouterProtection = (props) => {
@@ -6,12 +6,13 @@ const RouterProtection = (props) => {
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const Navigate = useNavigate();
     useEffect(() => {
-        let x = JSON.parse(localStorage.getItem("UserCred"));
+        let userUid = (localStorage.getItem("uId"));
+        // console.log(userUid)
         
-        if (x == null) {
+        if (userUid == null) {
             Navigate("/login")
         } else {
-            console.log("User is logged in", x.user.uid)
+            console.log("User is logged in", userUid)
         }
         
     }, [])

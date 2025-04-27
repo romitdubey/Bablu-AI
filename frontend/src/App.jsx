@@ -21,8 +21,8 @@ const router = createBrowserRouter([
         { path: "/", element: <HomePage /> },
         { path: "/login", element: <LoginForm /> },
         { path: "/signup", element: <SignupForm /> },
-        { path: "/dashboard", element: <UserDashBoard /> },
-        { path: "/interview", element: <InterviewHomePage /> },
+        { path: "/dashboard", element: <RouterProtection Component={UserDashBoard} /> },
+        { path: "/interview", element: <RouterProtection Component={InterviewHomePage}/>},
         // { path: "/speech", element: <TextToSpeech /> },
         // { path: "/text", element: <Dictaphone /> }
       ]
