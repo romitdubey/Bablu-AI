@@ -76,6 +76,7 @@ const UserDashBoard = () => {
 
     async function logout() {
         try {
+            localStorage.removeItem("uid");
             currentUser.setUser({
                 email: null,
                 id: null,
@@ -127,26 +128,13 @@ const UserDashBoard = () => {
                             </div>
                             : <div onClick={dashBoardSlider}>
                                 <div className="user-head">
-
+                                    
                                     <CgProfile className='user-profile' />
                                     {/* <button  className='btn' >
                                         <FaChevronRight className="user-dashboard-icon" />
                                     </button> */}
                                 </div>
-                                <div className="user-inner-info">
-                                    <div>
-                                        <FaAngleRight className='dashboard-icons' />
-                                    </div>
-                                    <div>
-                                        <FaAngleRight className='dashboard-icons' />
-                                    </div>
-                                    <div>
-                                        <FaAngleRight className='dashboard-icons' />
-                                    </div>
-                                    <div>
-                                        <FaAngleRight className='dashboard-icons' />
-                                    </div>
-                                </div>
+                                
                             </div>}
                     </div>
 
@@ -245,14 +233,14 @@ const UserDashBoard = () => {
                             </div>
                         </div> */}
 
-                        
+
+                        <h1 style={{textAlign: "center", margin: "4vw auto"}}>Your Skills</h1>
                         <div className="skills-container">
-                            <h2>Your Skills</h2>
                             <div className="skill-box">
                                 <span className="title">Communication</span>
 
                                 <div className="skill-bar">
-                                    <span className="skill-per" style={{ width: "70%"}}>
+                                    <span className="skill-per" style={{ width: "70%" }}>
                                         <span className="tooltip">70%</span>
                                     </span>
                                 </div>
@@ -262,7 +250,7 @@ const UserDashBoard = () => {
                                 <span className="title">Critical Thinking</span>
 
                                 <div className="skill-bar">
-                                    <span className="skill-per" style={{ width: "90%"}}>
+                                    <span className="skill-per" style={{ width: "90%" }}>
                                         <span className="tooltip">90%</span>
                                     </span>
                                 </div>
@@ -272,13 +260,20 @@ const UserDashBoard = () => {
                                 <span className="title">Confidence</span>
 
                                 <div className="skill-bar">
-                                    <span className="skill-per" style={{ width: "50%"}}>
+                                    <span className="skill-per" style={{ width: "50%" }}>
                                         <span className="tooltip">50%</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
 
+                        <h1 style={{textAlign: "center", margin: "4vw auto"}}>Your Stats</h1>
+
+                        <div className='stats' style={{display: "flex", justifyContent: "center"}}>
+
+                        <img src="/graph.png" alt="stats" />
+
+                        </div>
 
                     </div>
                 </div>

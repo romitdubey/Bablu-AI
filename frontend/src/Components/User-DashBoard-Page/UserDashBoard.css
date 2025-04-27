@@ -1,11 +1,11 @@
 .user-info {
-    padding: 30px;
+    padding: 18px;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, rgba(35, 37, 38, 0.5), rgba(65, 67, 69, 0.5));
-    border-radius: 30px;
+    border-radius: 16px;
     position: fixed;
-
+    width: min-content;
 }
 
 .user-head {
@@ -63,6 +63,10 @@
     color: white;
     margin-bottom: 0;
     padding: 3vw;
+}
+
+.resume-upload{
+    width: 30vw
 }
 
 .footer {
@@ -153,6 +157,7 @@
     overflow: hidden;
     background: linear-gradient(to bottom, #9d8aff, #878787);
     font-family: Arial, Helvetica, sans-serif;
+    width: 30vw;
 }
 
 .jd-card:before {
@@ -195,10 +200,10 @@
 /* From Uiverse.io by Juanes200122 */
 .skills-container {
     position: relative;
-    max-width: 423px;
+    max-width: 61vw;
     width: 100%;
     background: #282828;
-    margin: 0 15px;
+    margin: 0 auto;
     padding: 31px 20px;
     border-radius: 26px;
     border: 2px solid;
