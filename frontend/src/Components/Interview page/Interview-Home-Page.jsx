@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, use } from 'react'
 import './Interview-Home-Page.css';
 import { Experience } from '../Avatar/Experience';
 import Dictaphone from '../Text-Speech/Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import axios from 'axios';
 const HomePage = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
 
@@ -11,7 +12,7 @@ const HomePage = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [script, setScript] = useState('');
   const [playAudio, setPlayAudio] = useState(false);
-
+  const [userAnswer, setUserAnswer] = useState('');
 
   const videoRef = useRef(null);
   const streamRef = useRef(null);
@@ -63,7 +64,7 @@ const HomePage = () => {
   const previousTranscriptLength = useRef(0);
 
   // Stop mic after 5s of no activity
-  const  startInactivityTimer = () => {
+  const startInactivityTimer = () => {
     if (inactivityTimer.current) {
       clearTimeout(inactivityTimer.current);
     }
@@ -72,6 +73,7 @@ const HomePage = () => {
     inactivityTimer.current = setTimeout(() => {
       SpeechRecognition.stopListening();
       setNextQues(false);
+      handleTranscript()
       console.log('Mic stopped due to 5s of inactivity');
     }, 5000);
   };
@@ -116,7 +118,17 @@ const HomePage = () => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support speech recognition.</span>;
   }
-console.log(transcript)
+  const handleTranscript = async () => {
+    
+    console.log(transcript)
+    
+    let response = await axios.post("http://127.0.0.1:5000/chat", {
+      text: transcript
+    })
+    console.log(response.data)
+    localStorage.setItem('chat', response.data.reply)
+    
+  }
   return (
     <section className="homePage-section">
       <div className="row my-row">
@@ -125,7 +137,7 @@ console.log(transcript)
             <div className="messages" id="messages">
               <div className="message user"><i className="fa-thin fa-user"></i></div>
               <div className="message assistant">Chat History</div>
-              <div className='chat'>{localStorage.getItem('chat')}</div>              
+              <div className='chat'>{localStorage.getItem('chat')}</div>
             </div>
 
           </div>
@@ -139,7 +151,7 @@ console.log(transcript)
             />
             <div className="position-absolute bottom-0 start-50 translate-middle-x">
               {buttonTrigger ? <button className='speak-btn' onClick={speekHandle}>Stop</button> : <button className='speak-btn' onClick={speekHandle}>Start</button>}
-              {nextQues ? <button className='speak-btn' onClick={()=>{SpeechRecognition.stopListening(); setNextQues(false)}} >Stop</button> : <button className='speak-btn' onClick={startListeningWithInactivityTimer} >Speak</button>}
+              {nextQues ? <button className='speak-btn' onClick={() => { SpeechRecognition.stopListening(); setNextQues(false); handleTranscript() }} >Stop</button> : <button className='speak-btn' onClick={startListeningWithInactivityTimer} >Speak</button>}
             </div>
           </div>
 
@@ -171,7 +183,7 @@ console.log(transcript)
           </div>
         </div>
       </div>
-      
+
     </section>
   )
 }
