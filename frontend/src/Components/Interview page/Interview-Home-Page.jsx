@@ -82,10 +82,8 @@ const HomePage = () => {
           <div className="chat-section ">
             <div className="messages" id="messages">
               <div className="message user"><i className="fa-thin fa-user"></i></div>
-              <div className="message assistant">Chat History...</div>
-            </div>
-            <div className="input-area">
-              {/* chat history content */}
+              <div className="message assistant">Chat History</div>
+              <div className='chat'>{localStorage.getItem('chat')}</div>              
             </div>
 
           </div>
