@@ -40,10 +40,18 @@ body {
     overflow-y: auto;
     padding-right: 5px;
     max-height: 70vh;
+    width: 80%;
 }
 
 .message {
     margin-bottom: 10px;
+}
+
+.chat{
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: 0em;
 }
 
 .user {
