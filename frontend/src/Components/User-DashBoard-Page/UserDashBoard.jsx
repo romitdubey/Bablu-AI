@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaAngleRight } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { BiArrowFromLeft } from "react-icons/bi";
 import { storage, auth } from "../../firebase"
 import { uploadBytes, ref } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
@@ -100,32 +99,32 @@ const UserDashBoard = () => {
     return (
         <section className="user-dashbord">
             <div className=''>
-                <div className="row">
+                <div className="row" style={{ height: "max-content", paddingBottom: "5vh" }}>
                     <div className={(userNavWidth == true) ? "col-md-2 user-info " : "col-md-1 user-info"}>
                         {(userNavWidth == true) ?
                             <div>
                                 <div className="user-head">
-                                    <h2>Bablu</h2>
+                                    <h2>Menu</h2>
                                     <button onClick={dashBoardSlider} className='btn' >
                                         <FaChevronLeft className="user-dashboard-icon" />
                                     </button>
                                 </div>
                                 <div className="user-inner-info">
                                     <div>
-                                        <BiArrowFromLeft className='fs-5 m-2' />
-                                        <h6>demo1</h6>
+                                        <FaAngleRight className='fs-5 m-2' />
+                                        <h6>History</h6>
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='fs-5 m-2' />
-                                        <h6>demo1</h6>
+                                        <FaAngleRight className='fs-5 m-2' />
+                                        <h6>Evaluate</h6>
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='fs-5 m-2' />
-                                        <h6>demo1</h6>
+                                        <FaAngleRight className='fs-5 m-2' />
+                                        <h6>Schedule</h6>
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='fs-5 m-2' />
-                                        <h6>demo1</h6>
+                                        <FaAngleRight className='fs-5 m-2' />
+                                        <h6>Preferences</h6>
                                     </div>
                                     <button className='btn btn-danger' onClick={logout}>Logout</button>
                                 </div>
@@ -140,16 +139,16 @@ const UserDashBoard = () => {
                                 </div>
                                 <div className="user-inner-info">
                                     <div>
-                                        <BiArrowFromLeft className='dashboard-icons' />
+                                        <FaAngleRight className='dashboard-icons' />
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='dashboard-icons' />
+                                        <FaAngleRight className='dashboard-icons' />
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='dashboard-icons' />
+                                        <FaAngleRight className='dashboard-icons' />
                                     </div>
                                     <div>
-                                        <BiArrowFromLeft className='dashboard-icons' />
+                                        <FaAngleRight className='dashboard-icons' />
                                     </div>
                                 </div>
                             </div>}
@@ -191,7 +190,7 @@ const UserDashBoard = () => {
                         </div>
                         <button className="cool-btn upload-btn" onClick={startUpload}>Upload</button>
 
-                        <div className="user-inner-content">
+                        {/* <div className="user-inner-content">
                             <div className="row">
                                 <div className="col-sm-4">
                                     <div className="card m-4 bg-dark">
@@ -248,7 +247,7 @@ const UserDashBoard = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

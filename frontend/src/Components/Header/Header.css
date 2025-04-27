@@ -13,3 +13,9 @@
 .text-color{
     color: #ffff;
 }
+
+.nav-link:hover{
+    color: #ffff;
+    text-decoration: underline;
+    transition: all 0.3s ease-in-out;
+}

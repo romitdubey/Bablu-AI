@@ -55,10 +55,10 @@ const Header = () => {
 
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <Link className="nav-link text-color" >{currentUser.user.email}</Link>
+                                <span className="nav-link text-color" style={{textDecoration: "None", cursor: "default"}} >{currentUser.user.name}</span>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link text-color" onClick={logout}>Logout</Link>
+                                <img src="/user.png" alt="user-graphic" style={{"width": "3vw"}}/>
                             </li>
                         </ul>
 

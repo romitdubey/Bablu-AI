@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './LoginSignupform.css';
 import { auth } from "../../firebase.js"
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { LoaderContext } from '../../Context.js';
 
@@ -37,7 +37,10 @@ const SignupForm = () => {
     Loader.setLoaderState(false);
 
     try {
-      const userCred = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      const userCred = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      updateProfile(userCred.user, {
+        displayName: formData.name
+      });
       console.log(userCred);
       Navigate("/login");
     }

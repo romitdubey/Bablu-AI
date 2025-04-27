@@ -33,7 +33,8 @@ const LoginForm = () => {
             currentUser.setUser({
                 email: userCred.user.email,
                 id: userCred.user.uid,
-                loggedIn: true
+                loggedIn: true, 
+                name: userCred.user.displayName
             });
 
             navigate("/dashboard");
@@ -45,10 +46,6 @@ const LoginForm = () => {
             Loader.setLoaderState(true);
         }
     };
-
-    // useEffect(() => {
-    //     Loader.setLoaderState(true);
-    // });
 
     return (<>
 
@@ -75,7 +72,7 @@ const LoginForm = () => {
                 </div>
 
                 <div className='col-md-6 signup-img'>
-                    <img src="/signup.png" alt="Signup" className='img-fluid' />
+                    <img src="/login.png" alt="Signup" className='img-fluid' />
                 </div>
 
             </div>

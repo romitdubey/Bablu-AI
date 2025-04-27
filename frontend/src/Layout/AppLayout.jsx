@@ -11,7 +11,8 @@ const AppLayout = () => {
   const [user, setUser] = useState({
     email: null,
     id: null,
-    loggedIn: false
+    loggedIn: false,
+    name: null
   });
 
 

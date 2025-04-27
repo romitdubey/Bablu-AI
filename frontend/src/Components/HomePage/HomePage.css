@@ -45,10 +45,11 @@
   }
 .custom-icon{
     position: absolute;
-    width: 100%;
-    left: 0;
-    top: 36%;
+    width: 21%;
+    left: 32vw;
+    top: 53vh;
     font-size: 11vw;
+    border-radius: 50%;
 }
 
 @media (max-width: 768px) {

@@ -1,23 +1,24 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
+
 body {
     /* background: linear-gradient(135deg, #0f0f0f, #1a1a1a); */
     font-family: 'Orbitron', sans-serif;
     /* color: #00ffff; */
 }
 
-.homePage-section{
+.homePage-section {
     padding: 20px;
 }
 
-.my-row{
+.my-row {
     height: 78vh;
 }
 
 
-.subcontainers{
+.subcontainers {
     margin: auto 17px;
     padding: 0;
 }
@@ -26,12 +27,12 @@ body {
     height: 78vh;
     border: 1px solid white;
     border-radius: 15px;
-    /* padding: 15px; */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     box-shadow: 0 0 5px white;
     position: relative;
+    align-items: center;
 }
 
 .messages {
@@ -47,7 +48,8 @@ body {
 
 .user {
     text-align: right;
-    color: #00ffff; /* Font color  {Bablu }*/
+    color: #00ffff;
+    /* Font color  {Bablu }*/
 }
 
 .assistant {
@@ -75,7 +77,7 @@ body {
     height: 40px;
     margin-left: 10px;
     background: radial-gradient(circle, #00ffff88 0%, #000000 70%);
-    border: 2px solid ;
+    border: 2px solid;
     border-radius: 50%;
     animation: pulse 1.5s infinite;
 }
@@ -113,4 +115,8 @@ video {
     object-fit: cover;
     border-radius: 15px;
     /* background: rgba(0, 255, 255, 0.1); */
+}
+
+.avatar-container canvas {
+    border-radius: 14px;
 }

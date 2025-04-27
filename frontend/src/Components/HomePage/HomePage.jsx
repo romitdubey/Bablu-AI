@@ -1,6 +1,6 @@
 import React from 'react'
 import "./HomePage.css"
-import { FaAirbnb } from 'react-icons/fa'
+// import { FaAirbnb } from 'react-icons/fa'
 
 const HomePage = () => {
 
@@ -19,7 +19,8 @@ const HomePage = () => {
                                     strokeDasharray="700 1400"
                                     strokeLinecap="round" />
                             </svg>
-                            <FaAirbnb className='custom-icon' />
+                            {/* <FaAirbnb className='custom-icon' /> */}
+                            <img src="/homepage.jpeg" alt="Interview AI" className='custom-icon'/>
 
                         </div>
                     </div>
