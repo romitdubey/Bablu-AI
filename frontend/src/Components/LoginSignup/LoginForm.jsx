@@ -24,18 +24,21 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData);
         try{
             Loader.setLoaderState(false);
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("Successfully logged in", userCred);
 
-            currentUser.setUser({
+            await currentUser.setUser({
                 email: userCred.user.email,
                 id: userCred.user.uid,
                 loggedIn: true, 
                 name: userCred.user.displayName
             });
+
+            console.log("currentUser", currentUser.user);
+
+            localStorage.setItem("uId", currentUser.user.uid);
 
             navigate("/dashboard");
             
@@ -45,6 +48,7 @@ const LoginForm = () => {
         }finally{
             Loader.setLoaderState(true);
         }
+        console.log("login formData",currentUser.user.uid);
     };
 
     return (<>
