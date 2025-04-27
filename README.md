@@ -73,7 +73,7 @@ Challenge: Extracting structured data from unstructured documents.
 
 Solution: We used Groq’s LLM APIs for smart parsing and semantic understanding of resumes and job descriptions.
 
-###### Human-Like Interview Simulation:
+##### Human-Like Interview Simulation:
 
 Challenge: Making the virtual interviewer engaging and life-like.
 
@@ -123,8 +123,7 @@ Add images, GIFs, or screenshots if helpful!
 
 ## 📽️ Demo & Deliverables
 
-- **Demo Video Link:** [Paste YouTube or Loom link here]  
-- **Pitch Deck / PPT Link:** [Paste Google Slides / PDF link here]  
+- **Demo Video Link:** [Link ](https://youtu.be/_2ZYvrtgaus)
 
 ---
 
@@ -141,24 +140,28 @@ Add images, GIFs, or screenshots if helpful!
 ## 🧪 How to Run the Project
 
 ### Requirements:
-- Node.js / Python / Docker / etc.
-- API Keys (if any)
-- .env file setup (if needed)
+- Python/ React.
+- Groq API key
+- .env file setup
 
 ### Local Setup:
 ```bash
 # Clone the repo
-git clone https://github.com/your-team/project-name
+git clone https://github.com/romitdubey/Interview-AI.git
 
 # Install dependencies
-cd project-name
-npm install
+pip install -r requirements.txt
 
+Terminal1:
+cd backend/core -> python api.py
+
+Terminal2:
+cd frontend
+npm install
 # Start development server
 npm run dev
 ```
 
-Provide any backend/frontend split or environment setup notes here.
 
 ---
 
@@ -174,14 +177,9 @@ List improvements, extensions, or follow-up features:
 
 ## 📎 Resources / Credits
 
-- APIs or datasets used  
-- Open source libraries or tools referenced  
-- Acknowledgements  
+- Groq API 
+- ThreeJs, Firebase  
 
 ---
-
-## 🏁 Final Words
-
-Share your hackathon journey — challenges, learnings, fun moments, or shout-outs!
 
 ---

@@ -142,7 +142,7 @@ capture.jpg
 
 # Rope project settings
 .ropeproject
-
+.env
 # mkdocs documentation
 /site
 backend/avatar/node_modules
