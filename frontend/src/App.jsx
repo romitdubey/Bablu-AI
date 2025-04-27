@@ -9,7 +9,7 @@ import UserDashBoard from './Components/User-DashBoard-Page/UserDashBoard'
 import InterviewHomePage from './Components/Interview page/Interview-Home-Page'
 import TextToSpeech from './Components/Text-Speech/TextToSpeech'
 import RouterProtection from './Components/RouterProtection'
-// import Dictaphone from './Components/Text-Speech/Dictaphone'
+import Dictaphone from './Components/Text-Speech/Dictaphone'
 
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         { path: "/dashboard", element: <RouterProtection Component={UserDashBoard} /> },
         { path: "/interview", element: <RouterProtection Component={InterviewHomePage}/>},
         // { path: "/speech", element: <TextToSpeech /> },
-        // { path: "/text", element: <Dictaphone /> }
+        { path: "/text", element: <Dictaphone /> }
       ]
     }]
   )

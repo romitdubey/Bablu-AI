@@ -120,3 +120,19 @@ video {
 .avatar-container canvas {
     border-radius: 14px;
 }
+
+.experience-interview-page{
+    position: relative;
+}
+.speak-btn{
+    /* position: absolute; */
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -1,60 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react'
 import './Interview-Home-Page.css';
 import { Experience } from '../Avatar/Experience';
+import Dictaphone from '../Text-Speech/Dictaphone';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 const HomePage = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
+
+  const [buttonTrigger, setButtonTrigger] = useState(false);
+  const [nextQues, setNextQues] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [script, setScript] = useState('');
+  const [playAudio, setPlayAudio] = useState(false);
+
+
   const videoRef = useRef(null);
   const streamRef = useRef(null);
-
-  let chatHistory =localStorage.getItem('chat');
-  console.log(chatHistory)
-  /*TEXT TO SPEECH START */
-  // const [text, setText] = useState(chatHistory);
-  // //   function speek(){
-  // //       const value = new SpeechSynthesisUtterance(text);
-  // //       window.speechSynthesis.speak(value);
-  // //     }
-  // //     useEffect(() => {  speek() },[])
-  // const [voices, setVoices] = useState([]);
-  // const [selectedVoice, setSelectedVoice] = useState(null);
-
-  // // Load voices and set Hindi voice
-  // useEffect(() => {
-  //   const loadVoices = () => {
-  //     const availableVoices = speechSynthesis.getVoices();
-  //     const hindiVoices = availableVoices.filter(voice => voice.lang.includes('hi') || voice.name.includes('हिन्दी'));
-
-  //     if (hindiVoices.length > 0) {
-  //       setVoices(hindiVoices);
-  //       setSelectedVoice(hindiVoices[0]);
-  //     }
-  //   };
-
-  //   if (speechSynthesis.getVoices().length !== 0) {
-  //     loadVoices();
-  //   } else {
-  //     speechSynthesis.onvoiceschanged = loadVoices;
-  //   }
-
-  //   return () => {
-  //     speechSynthesis.onvoiceschanged = null;
-  //   };
-  // }, []);
-
-  // // Speak the text when voice is loaded
-  // useEffect(() => {
-  //   if (selectedVoice && text) {
-  //     const utterance = new SpeechSynthesisUtterance(text);
-  //     utterance.voice = selectedVoice;
-  //     speechSynthesis.speak(utterance);
-  //   }
-  // }, [selectedVoice, text]);
-
-
-  /*TEXT TO SPEECH END */
-
-
-
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
@@ -74,9 +34,89 @@ const HomePage = () => {
       setIsCameraOn(false);
     }
   }
+  const speekHandle = () => {
+    (buttonTrigger) ? setButtonTrigger(false) : setButtonTrigger(true);
+    console.log("hello")
+    if (playAudio) {
+      setPlayAudio(false)
+    } else {
 
+      setPlayAudio(true)
+    }
+    if (isSpeaking) {
+      setIsSpeaking(false)
+    } else {
+      setIsSpeaking(true);
+    }
 
+    setScript(localStorage.getItem('chat'))
+  }
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
 
+  const inactivityTimer = useRef(null);
+  const [hasSpoken, setHasSpoken] = useState(false);
+  const previousTranscriptLength = useRef(0);
+
+  // Stop mic after 5s of no activity
+  const  startInactivityTimer = () => {
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+
+    // await setNextQues(true);
+    inactivityTimer.current = setTimeout(() => {
+      SpeechRecognition.stopListening();
+      setNextQues(false);
+      console.log('Mic stopped due to 5s of inactivity');
+    }, 5000);
+  };
+
+  // Start listening + initialize everything
+  const startListeningWithInactivityTimer = () => {
+    setNextQues(true);
+    resetTranscript();
+    setHasSpoken(false);
+    previousTranscriptLength.current = 0;
+
+    SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
+    console.log('Mic started');
+
+    // Start inactivity timer immediately (in case user stays silent)
+    startInactivityTimer();
+  };
+
+  // Watch for transcript updates
+  useEffect(() => {
+    if (!listening) return;
+
+    if (transcript.length > previousTranscriptLength.current) {
+      previousTranscriptLength.current = transcript.length;
+
+      if (!hasSpoken) {
+        setHasSpoken(true);
+      }
+
+      // Reset inactivity timer on new speech
+      console.log('Speech detected, resetting inactivity timer');
+      startInactivityTimer();
+    }
+
+    return () => {
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+    };
+  }, [transcript, listening]);
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Your browser doesn't support speech recognition.</span>;
+  }
+console.log(transcript)
   return (
     <section className="homePage-section">
       <div className="row my-row">
@@ -94,17 +134,15 @@ const HomePage = () => {
         </div>
         <div className="col-md-5 col-sm-6 p-0 subcontainers">
           <div className="chat-section ">
-            {/* <div className="messages" id="messages">
-                            <div className="message user">Hello Bablu!</div>
-                            <div className="message assistant">Namaste Bhai! Kya help chahiye?</div>
-                        </div>
-                        <div className="input-area">
-                            <input type="text" id="userInput" placeholder="Type your message..." />
-                            <div className="mic"></div>
-                        </div>
-                         */}
-            <Experience />
-
+            <Experience className="experience-interview-page"
+              playAudio={isSpeaking}
+              script={script}
+              setSpeaking={setIsSpeaking}
+            />
+            <div className="position-absolute bottom-0 start-50 translate-middle-x">
+              {buttonTrigger ? <button className='speak-btn' onClick={speekHandle}>Stop</button> : <button className='speak-btn' onClick={speekHandle}>Start</button>}
+              {nextQues ? <button className='speak-btn' onClick={()=>{SpeechRecognition.stopListening(); setNextQues(false)}} >Stop</button> : <button className='speak-btn' onClick={startListeningWithInactivityTimer} >Speak</button>}
+            </div>
           </div>
 
         </div>
@@ -129,12 +167,13 @@ const HomePage = () => {
 
             <video ref={videoRef} autoPlay muted className={(isCameraOn) ? 'demo' : 'background'} hidden={!isCameraOn}></video>
 
-            <img src="/user.png" alt="User Graphic" style={{ width: "22vw" }} hidden={isCameraOn}/>
+            <img src="/user.png" alt="User Graphic" style={{ width: "22vw" }} hidden={isCameraOn} />
 
             {(isCameraOn) ? <button className="camera-toggle" onClick={stopCamera}>Stop Camera</button> : <button className="camera-toggle" onClick={startCamera}>Start Camera</button>}
           </div>
         </div>
       </div>
+      
     </section>
   )
 }

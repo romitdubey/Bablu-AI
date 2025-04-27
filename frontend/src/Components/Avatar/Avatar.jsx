@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useGraph } from '@react-three/fiber';
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
-import { useControls } from 'leva';
 
 const corresponding = {
   A: "viseme_PP",
@@ -16,37 +15,19 @@ const corresponding = {
   X: "viseme_PP",
 };
 
-export default function Avatar(props) {
+export default function Avatar({ playAudio, script, setIsSpeaking, ...props }) {
   const group = useRef();
   const { scene } = useGLTF('models/avatargirl.glb');
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
 
-  // Leva UI controls
-  const {
-    playAudio,
-    script,
-    // headFollow,
-    smoothMorphTarget,
-    morphTargetSmoothing,
-  } = useControls({
-    playAudio: false,
-    headFollow: true,
-    smoothMorphTarget: true,
-    morphTargetSmoothing: 0.5,
-    script: {
-      value: localStorage.getItem('chat'),
-    },
-  });
-
-  // Web Speech API
   const utteranceRef = useRef(null);
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const isSpeakingRef = useRef(false);
 
   useEffect(() => {
-    if (playAudio) {
+    if (playAudio && script) {
       const synth = window.speechSynthesis;
-  
+
       const speak = () => {
         const voices = synth.getVoices();
         const hindiVoice = voices.find(
@@ -54,44 +35,45 @@ export default function Avatar(props) {
             voice.lang.toLowerCase().includes('hi') ||
             voice.name.includes('हिन्दी')
         );
-  
+
         const utterance = new SpeechSynthesisUtterance(script);
         utterance.rate = 0.9;
         utterance.pitch = 1;
         if (hindiVoice) {
           utterance.voice = hindiVoice;
         }
-  
+
+        utterance.onstart = () => {
+          isSpeakingRef.current = true;
+          setIsSpeaking?.(true);
+        };
+        utterance.onend = () => {
+          isSpeakingRef.current = false;
+          setIsSpeaking?.(false);
+        };
+
         utteranceRef.current = utterance;
-  
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-  
         synth.speak(utterance);
       };
-  
-      // Sometimes voices are not immediately loaded
+
       if (synth.getVoices().length === 0) {
         synth.onvoiceschanged = speak;
       } else {
         speak();
       }
     } else {
-      if (utteranceRef.current) {
-        speechSynthesis.cancel();
-        setIsSpeaking(false);
-      }
+      speechSynthesis.cancel();
+      isSpeakingRef.current = false;
+      setIsSpeaking?.(false);
     }
-  }, [playAudio, script]);
-  
+  }, [playAudio, script, setIsSpeaking]);
 
   // Viseme animation logic
   const lastVisemeTime = useRef(0);
   const currentViseme = useRef(null);
-  const visemeDuration = 200; // milliseconds
+  const visemeDuration = 200;
 
   useFrame(() => {
-    // Reset all visemes
     Object.values(corresponding).forEach((viseme) => {
       const index = nodes.Wolf3D_Avatar.morphTargetDictionary[viseme];
       if (index !== undefined) {
@@ -99,12 +81,11 @@ export default function Avatar(props) {
       }
     });
 
-    if (isSpeaking) {
+    if (isSpeakingRef.current) {
       const now = performance.now();
       if (now - lastVisemeTime.current > visemeDuration) {
         const visemeKeys = Object.values(corresponding);
-        const randomViseme =
-          visemeKeys[Math.floor(Math.random() * visemeKeys.length)];
+        const randomViseme = visemeKeys[Math.floor(Math.random() * visemeKeys.length)];
         currentViseme.current = randomViseme;
         lastVisemeTime.current = now;
       }
