@@ -30,12 +30,16 @@ const LoginForm = () => {
             const userCred = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("Successfully logged in", userCred);
 
-            currentUser.setUser({
+            await currentUser.setUser({
                 email: userCred.user.email,
                 id: userCred.user.uid,
                 loggedIn: true, 
                 name: userCred.user.displayName
             });
+
+            console.log(currentUser.user);
+
+            localStorage.setItem("uId", userCred.user.uid);
 
             navigate("/dashboard");
             
