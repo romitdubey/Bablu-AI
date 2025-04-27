@@ -83,17 +83,12 @@ const UserDashBoard = () => {
             });
             await auth.signOut();
             console.log("Logged out successfully")
-            localStorage.removeItem("UserCred");
             Navigate("/");
-           
+
         }
         catch (err) {
             console.log(err);
         }
-    }
-    const userLogout = () => {
-        // localStorage.removeItem("userData");
-        Navigate("/login");
     }
 
     return (
@@ -248,6 +243,42 @@ const UserDashBoard = () => {
                                 </div>
                             </div>
                         </div> */}
+
+                        
+                        <div className="skills-container">
+                            <h2>Your Skills</h2>
+                            <div className="skill-box">
+                                <span className="title">Communication</span>
+
+                                <div className="skill-bar">
+                                    <span className="skill-per" style={{ width: "70%"}}>
+                                        <span className="tooltip">70%</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="skill-box">
+                                <span className="title">Critical Thinking</span>
+
+                                <div className="skill-bar">
+                                    <span className="skill-per" style={{ width: "90%"}}>
+                                        <span className="tooltip">90%</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="skill-box">
+                                <span className="title">Confidence</span>
+
+                                <div className="skill-bar">
+                                    <span className="skill-per" style={{ width: "50%"}}>
+                                        <span className="tooltip">50%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

@@ -36,9 +36,9 @@ const LoginForm = () => {
                 name: userCred.user.displayName
             });
 
-            console.log("currentUser", currentUser.user);
+            console.log(currentUser.user);
 
-            localStorage.setItem("uId", currentUser.user.uid);
+            localStorage.setItem("uId", userCred.user.uid);
 
             navigate("/dashboard");
             
