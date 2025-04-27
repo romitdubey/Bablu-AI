@@ -59,14 +59,12 @@ def chat():
         if not user_input:
             return jsonify({"error": "Text is required"}), 400
 
-        chat_history = update_chat_history(True, user_input)  # user message
+        chat_history = update_chat_history(True, user_input) 
         ai_response = interview_with_groq(chat_history)
         update_chat_history(False, ai_response)
-        #chat_history = json.load(open("../user_history/chat_messages.json"))
-       # latest_chat_history = chat_history[-1:]  # AI reply
+
         return jsonify({
             "reply": ai_response,
-           # "chat_history": latest_chat_history
         })
     except Exception as e:
         print(e)
